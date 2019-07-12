@@ -5,8 +5,20 @@
  */
 
 require('./bootstrap');
+import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+
+import VueRouter from 'vue-router'
+import UserManagementComponent from "./components/UserManagementComponent.vue";
 
 window.Vue = require('vue');
+window.Vuetify = require('vuetify');
+Vue.use(Vuetify)
+Vue.use(VueRouter)
+window.axios = require('axios');
+
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+};
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +32,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('home-component', require('./components/HomeComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +40,18 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+    	{
+            path: '/usermanagement',
+            name: 'usermanagement',
+            component: UserManagementComponent
+        },
+    ],
+});
+
 const app = new Vue({
     el: '#app',
+    router,
 });
