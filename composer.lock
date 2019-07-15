@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e1708d4df923628001d6d3d85f486d5",
+    "content-hash": "75764d1fbc7d5aac8eebaf6035bc3bad",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -3669,6 +3669,45 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "tiketux/usermanagement",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/euclidian/user-management.git",
+                "reference": "82aa22b6a9df44be2da8731fb30dfd3518dad385"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/euclidian/user-management/zipball/82aa22b6a9df44be2da8731fb30dfd3518dad385",
+                "reference": "82aa22b6a9df44be2da8731fb30dfd3518dad385",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tiketux\\UserManagement\\UserManagementServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tiketux\\UserManagement\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Muhammad Anis",
+                    "email": "m.anis@3trust.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/euclidian/user-management/tree/0.1",
+                "issues": "https://github.com/euclidian/user-management/issues"
+            },
+            "time": "2019-07-15T03:12:09+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
