@@ -1873,7 +1873,6 @@ __webpack_require__.r(__webpack_exports__);
       that.instance.post('generateToken', {
         "user_id": params
       }).then(function (response) {
-        that.usermanagement = response.data.data;
         that.list();
       })["catch"](function (error) {
         that.list();
