@@ -3672,16 +3672,16 @@
         },
         {
             "name": "tiketux/usermanagement",
-            "version": "0.1",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/user-management.git",
-                "reference": "82aa22b6a9df44be2da8731fb30dfd3518dad385"
+                "reference": "93fb7d4f56af6dadb21d8ed65310c81ca140764c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/user-management/zipball/82aa22b6a9df44be2da8731fb30dfd3518dad385",
-                "reference": "82aa22b6a9df44be2da8731fb30dfd3518dad385",
+                "url": "https://api.github.com/repos/euclidian/user-management/zipball/93fb7d4f56af6dadb21d8ed65310c81ca140764c",
+                "reference": "93fb7d4f56af6dadb21d8ed65310c81ca140764c",
                 "shasum": ""
             },
             "type": "library",
@@ -3704,10 +3704,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/user-management/tree/0.1",
+                "source": "https://github.com/euclidian/user-management/tree/0.1.1",
                 "issues": "https://github.com/euclidian/user-management/issues"
             },
-            "time": "2019-07-15T03:12:09+00:00"
+            "time": "2019-07-15T05:25:54+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
