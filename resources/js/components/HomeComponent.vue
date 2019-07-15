@@ -49,7 +49,7 @@ export default {
   
   data() {
     return {
-      navigation: "profile",
+      navigation: "usermanagement",
       admin: false,
       csrf: document
         .querySelector('meta[name="csrf-token"]')

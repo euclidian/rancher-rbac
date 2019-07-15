@@ -1779,7 +1779,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "HomeComponent",
   data: function data() {
     return {
-      navigation: "profile",
+      navigation: "usermanagement",
       admin: false,
       csrf: document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     };
@@ -1808,6 +1808,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserManagementComponent",
   mounted: function mounted() {
@@ -1817,14 +1847,46 @@ __webpack_require__.r(__webpack_exports__);
     this.list();
   },
   data: function data() {
-    return {};
+    return {
+      usermanagement: [],
+      header: [{
+        text: "ID User ",
+        value: "id"
+      }, {
+        text: "Nama User",
+        value: "name"
+      }, {
+        text: "Secret ID",
+        value: "secretid"
+      }, {
+        text: "Secret",
+        value: "secret"
+      }, {
+        text: "Action",
+        value: "id"
+      }]
+    };
   },
   methods: {
+    generateToken: function generateToken(params) {
+      var that = this;
+      that.instance.post('generateToken', {
+        "user_id": params
+      }).then(function (response) {
+        that.usermanagement = response.data.data;
+        that.list();
+      })["catch"](function (error) {
+        that.list();
+      });
+    },
     list: function list() {
-      console.log("test");
-      this.instance.get('list').then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {});
+      var that = this;
+      that.instance.get('list').then(function (response) {
+        that.usermanagement = response.data.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
     }
   }
 });
@@ -37940,7 +38002,113 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-app", [_c("label", [_vm._v("saya")])])
+  return _c(
+    "v-app",
+    [
+      _c(
+        "v-card",
+        [
+          _c("v-card-title", { attrs: { "primary-title": "" } }, [
+            _c("div", [
+              _c("h3", { staticClass: "headline mb-0" }, [
+                _vm._v("Daftar User")
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("v-data-table", {
+            staticClass: "elevation-1",
+            attrs: {
+              "rows-per-page-items": _vm.rowsPerPageItems,
+              pagination: _vm.pagination,
+              headers: _vm.header,
+              items: _vm.usermanagement
+            },
+            on: {
+              "update:pagination": function($event) {
+                _vm.pagination = $event
+              }
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "items",
+                fn: function(props) {
+                  return [
+                    _c("td", [_vm._v(_vm._s(props.item.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(props.item.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(props.item.secretid))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(props.item.secret))]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c(
+                          "v-tooltip",
+                          {
+                            attrs: { top: "" },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "activator",
+                                  fn: function(ref) {
+                                    var on = ref.on
+                                    return [
+                                      _c(
+                                        "v-btn",
+                                        _vm._g(
+                                          {
+                                            attrs: {
+                                              fab: "",
+                                              dark: "",
+                                              small: "",
+                                              color: "error"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.generateToken(
+                                                  props.item.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          on
+                                        ),
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            { attrs: { dark: "" } },
+                                            [_vm._v("vpn_key")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]
+                                  }
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [_vm._v(" "), _c("span", [_vm._v("Generate Token")])]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
