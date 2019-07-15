@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Auth;
 use Closure;
+use App\Http\Controllers\Controller;
+use App\User;
 
 class IsAdmin
 {
