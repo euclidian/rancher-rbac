@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75764d1fbc7d5aac8eebaf6035bc3bad",
+    "content-hash": "dd986289a6cf0f3c195ac6fc7cff4fa4",
     "packages": [
+        {
+            "name": "benmag/laravel-rancher",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benmag/laravel-rancher.git",
+                "reference": "8ec03c460bcd3a5595d683ffa30df7f34ccd5f67"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benmag/laravel-rancher/zipball/8ec03c460bcd3a5595d683ffa30df7f34ccd5f67",
+                "reference": "8ec03c460bcd3a5595d683ffa30df7f34ccd5f67",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "~5.1",
+                "php": "~5.5|~7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Benmag\\Rancher\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Mag",
+                    "homepage": "http://github.com/benmag"
+                }
+            ],
+            "description": "Rancher API wrapper for Laravel",
+            "homepage": "https://github.com/benmag/laravel-rancher",
+            "keywords": [
+                "benmag",
+                "docker",
+                "rancher"
+            ],
+            "time": "2017-12-13T02:11:17+00:00"
+        },
         {
             "name": "defuse/php-encryption",
             "version": "v2.2.1",
@@ -3669,6 +3723,48 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "tiketux/rancher-projects",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/euclidian/rancher-projects.git",
+                "reference": "54154ece5b2843b5c6f1d9df66f7c04619ba5c0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/54154ece5b2843b5c6f1d9df66f7c04619ba5c0e",
+                "reference": "54154ece5b2843b5c6f1d9df66f7c04619ba5c0e",
+                "shasum": ""
+            },
+            "require": {
+                "benmag/laravel-rancher": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tiketux\\RancherProjects\\RancherProjectsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tiketux\\RancherProjects\\": "src/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Muhammad Anis",
+                    "email": "m.anis@3trust.com"
+                }
+            ],
+            "support": {
+                "source": "https://github.com/euclidian/rancher-projects/tree/0.1",
+                "issues": "https://github.com/euclidian/rancher-projects/issues"
+            },
+            "time": "2019-07-16T03:44:13+00:00"
         },
         {
             "name": "tiketux/usermanagement",
