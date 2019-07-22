@@ -9,6 +9,7 @@ import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 
 import VueRouter from 'vue-router'
 import UserManagementComponent from "./components/UserManagementComponent.vue";
+import RancherProjectsComponent from "./components/RancherProjectsComponent.vue";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -47,6 +48,11 @@ const router = new VueRouter({
             path: '/usermanagement',
             name: 'usermanagement',
             component: UserManagementComponent
+        },
+        {
+            path: '/rancherprojects',
+            name: 'rancherprojects',
+            component: RancherProjectsComponent
         },
     ],
 });
