@@ -3726,16 +3726,16 @@
         },
         {
             "name": "tiketux/rancher-projects",
-            "version": "0.1",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/rancher-projects.git",
-                "reference": "54154ece5b2843b5c6f1d9df66f7c04619ba5c0e"
+                "reference": "4450b050bb726a0f196770c16ce225649cb48ff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/54154ece5b2843b5c6f1d9df66f7c04619ba5c0e",
-                "reference": "54154ece5b2843b5c6f1d9df66f7c04619ba5c0e",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/4450b050bb726a0f196770c16ce225649cb48ff3",
+                "reference": "4450b050bb726a0f196770c16ce225649cb48ff3",
                 "shasum": ""
             },
             "require": {
@@ -3761,10 +3761,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/rancher-projects/tree/0.1",
+                "source": "https://github.com/euclidian/rancher-projects/tree/0.1.3",
                 "issues": "https://github.com/euclidian/rancher-projects/issues"
             },
-            "time": "2019-07-16T03:44:13+00:00"
+            "time": "2019-07-22T02:50:38+00:00"
         },
         {
             "name": "tiketux/usermanagement",
@@ -5018,8 +5018,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "email": "sebastian@phpunit.de",
-                    "role": "lead"
+                    "role": "lead",
+                    "email": "sebastian@phpunit.de"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
