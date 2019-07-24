@@ -38267,11 +38267,15 @@ var render = function() {
                 "v-list-tile",
                 { attrs: { to: "/rancherprojects" } },
                 [
-                  _c("v-list-tile-action", [_c("v-icon", [_vm._v("book")])], 1),
+                  _c(
+                    "v-list-tile-action",
+                    [_c("v-icon", [_vm._v("public")])],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "v-list-tile-content",
-                    [_c("v-list-tile-title", [_vm._v("Rancher Projects")])],
+                    [_c("v-list-tile-title", [_vm._v("Online Stack")])],
                     1
                   )
                 ],
