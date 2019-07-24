@@ -27,6 +27,14 @@
             <v-list-tile-title>Rancher Projects</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile to="/stack">
+          <v-list-tile-action>
+            <v-icon>book</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Stack</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile @click="logout()">
           <v-list-tile-action>
             <v-icon>power_settings_new</v-icon>

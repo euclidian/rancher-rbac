@@ -1783,6 +1783,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeComponent",
   data: function data() {
@@ -1899,7 +1907,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "RancherProjectsComponent",
   mounted: function mounted() {
     this.instance = axios.create({
-      baseURL: '/tiketux/rancherprojects/api/'
+      baseURL: '/tiketux/rancher/stack/api/'
     });
     this.list();
   },
@@ -1972,6 +1980,171 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
         that.dialog = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "StackRancherComponent",
+  mounted: function mounted() {
+    this.instance = axios.create({
+      baseURL: '/tiketux/rancher/stack/api/'
+    });
+    this.list();
+  },
+  data: function data() {
+    return {
+      editStack: false,
+      stacks: [],
+      header: [{
+        text: "ID Rancher ",
+        value: "rancher_stack_id"
+      }, {
+        text: "Remark",
+        value: "remark"
+      }, {
+        text: "Tanggal",
+        value: "created_at"
+      }, {
+        text: "Action",
+        value: "id"
+      }]
+    };
+  },
+  methods: {
+    list: function list() {
+      var that = this;
+      that.instance.get('liststackdb').then(function (response) {
+        that.stacks = response.data.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    formEditStack: function formEditStack(params) {
+      var that = this;
+      that.id_stack = params;
+      that.instance.post('cekstackdb', {
+        "id_stack": params
+      }).then(function (response) {
+        that.detailstack = response.data.data;
+        that.rancherStackId = response.data.data.rancher_stack_id;
+        that.remarkStack = response.data.data.remark;
+        that.editStack = true;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    save: function save() {
+      var that = this;
+      that.instance.post('addstackdb', {
+        "stack_id": that.rancherStackId,
+        "remark": that.remarkStack
+      }).then(function (response) {
+        console.log(response);
+        that.editStack = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    deleteStack: function deleteStack(params) {
+      var that = this;
+      that.instance.post('deletestackdb', {
+        "stack_id": params
+      }).then(function (response) {
+        console.log(response);
         that.list();
       })["catch"](function (error) {
         console.log(response.data);
@@ -38107,6 +38280,21 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-tile",
+                { attrs: { to: "/stack" } },
+                [
+                  _c("v-list-tile-action", [_c("v-icon", [_vm._v("book")])], 1),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-content",
+                    [_c("v-list-tile-title", [_vm._v("Stack")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-tile",
                 {
                   on: {
                     click: function($event) {
@@ -38425,6 +38613,292 @@ var render = function() {
         ],
         1
       )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    [
+      _vm.editStack
+        ? _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [_vm._v("Edit Stack")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  counter: 10,
+                                  rules: _vm.nameRules,
+                                  label: "Name",
+                                  required: "",
+                                  readonly: ""
+                                },
+                                model: {
+                                  value: _vm.rancherStackId,
+                                  callback: function($$v) {
+                                    _vm.rancherStackId = $$v
+                                  },
+                                  expression: "rancherStackId"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-textarea", {
+                                attrs: {
+                                  name: "input-7-1",
+                                  label: "Remark",
+                                  hint: "Hint text"
+                                },
+                                model: {
+                                  value: _vm.remarkStack,
+                                  callback: function($$v) {
+                                    _vm.remarkStack = $$v
+                                  },
+                                  expression: "remarkStack"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.editStack = false
+                        }
+                      }
+                    },
+                    [_vm._v("Batal")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Simpan")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _c(
+            "v-card",
+            [
+              _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                _c("div", [
+                  _c("h3", { staticClass: "headline mb-0" }, [
+                    _vm._v("Daftar Stack")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  "rows-per-page-items": _vm.rowsPerPageItems,
+                  pagination: _vm.pagination,
+                  headers: _vm.header,
+                  items: _vm.stacks
+                },
+                on: {
+                  "update:pagination": function($event) {
+                    _vm.pagination = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("td", [_vm._v(_vm._s(props.item.rancher_stack_id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.remark))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.created_at))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { top: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                attrs: {
+                                                  fab: "",
+                                                  dark: "",
+                                                  small: "",
+                                                  color: "warning"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.formEditStack(
+                                                      props.item
+                                                        .rancher_stack_id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _c(
+                                                "v-icon",
+                                                { attrs: { dark: "" } },
+                                                [_vm._v("edit")]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Edit Stack in Database")])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { top: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                attrs: {
+                                                  fab: "",
+                                                  dark: "",
+                                                  small: "",
+                                                  color: "error"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.deleteStack(
+                                                      props.item
+                                                        .rancher_stack_id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _c(
+                                                "v-icon",
+                                                { attrs: { dark: "" } },
+                                                [_vm._v("delete")]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Delete Stack in Database")])
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
     ],
     1
   )
@@ -79412,6 +79886,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_UserManagementComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/UserManagementComponent.vue */ "./resources/js/components/UserManagementComponent.vue");
 /* harmony import */ var _components_RancherProjectsComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/RancherProjectsComponent.vue */ "./resources/js/components/RancherProjectsComponent.vue");
+/* harmony import */ var _components_StackRancherComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/StackRancherComponent.vue */ "./resources/js/components/StackRancherComponent.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -79420,6 +79895,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
  // Ensure you are using css-loader
+
 
 
 
@@ -79460,6 +79936,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/rancherprojects',
     name: 'rancherprojects',
     component: _components_RancherProjectsComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }, {
+    path: '/stack',
+    name: 'stack',
+    component: _components_StackRancherComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }]
 });
 var app = new Vue({
@@ -79729,6 +80209,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RancherProjectsComponent_vue_vue_type_template_id_02c09f9d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RancherProjectsComponent_vue_vue_type_template_id_02c09f9d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/StackRancherComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/StackRancherComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StackRancherComponent.vue?vue&type=template&id=bf95fa4e& */ "./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e&");
+/* harmony import */ var _StackRancherComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StackRancherComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StackRancherComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/StackRancherComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StackRancherComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackRancherComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./StackRancherComponent.vue?vue&type=template&id=bf95fa4e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackRancherComponent.vue?vue&type=template&id=bf95fa4e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
