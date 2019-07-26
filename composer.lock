@@ -3726,16 +3726,16 @@
         },
         {
             "name": "tiketux/rancher-projects",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/rancher-projects.git",
-                "reference": "d8e81a4b0126caae2a211975e0dbd37ad1812d7f"
+                "reference": "11671b1bf9d1b624d1369c79885299d968faf1f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/d8e81a4b0126caae2a211975e0dbd37ad1812d7f",
-                "reference": "d8e81a4b0126caae2a211975e0dbd37ad1812d7f",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/11671b1bf9d1b624d1369c79885299d968faf1f9",
+                "reference": "11671b1bf9d1b624d1369c79885299d968faf1f9",
                 "shasum": ""
             },
             "require": {
@@ -3761,10 +3761,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/rancher-projects/tree/0.1.4",
+                "source": "https://github.com/euclidian/rancher-projects/tree/0.1.5",
                 "issues": "https://github.com/euclidian/rancher-projects/issues"
             },
-            "time": "2019-07-24T02:25:43+00:00"
+            "time": "2019-07-26T02:51:29+00:00"
         },
         {
             "name": "tiketux/usermanagement",

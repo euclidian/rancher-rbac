@@ -1903,6 +1903,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RancherProjectsComponent",
   mounted: function mounted() {
@@ -1914,12 +2015,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       dialog: false,
+      dialogDetail: false,
+      dialogAddService: false,
       stackdb: [],
+      service: [],
       rowsPerPageItems: [25, 50, 75, 100],
       pagination: {
         rowsPerPage: 25
       },
+      gitUrl: null,
       remark: null,
+      remarkRancher: null,
       rancherprojects: [],
       header: [{
         text: "ID Rancher ",
@@ -1936,6 +2042,16 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "State",
         value: "state"
+      }, {
+        text: "Action",
+        value: "id"
+      }],
+      headerService: [{
+        text: "ID",
+        value: "id"
+      }, {
+        text: "Nama",
+        value: "name"
       }, {
         text: "Action",
         value: "id"
@@ -1967,7 +2083,7 @@ __webpack_require__.r(__webpack_exports__);
         "id_stack": item.id
       }).then(function (response) {
         that.rancherprojects[index].status = response.data.data;
-        console.log(response.data);
+        console.log(response.data.data);
       })["catch"](function (error) {
         console.log(response.data);
       });
@@ -1981,6 +2097,67 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
         that.dialog = false;
         that.list();
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    detailStack: function detailStack(params) {
+      var that = this;
+      that.instance.post('cekstackdb', {
+        "id_stack": params
+      }).then(function (response) {
+        that.idStackDB = response.data.data.id;
+        that.idStack = response.data.data.rancher_stack_id;
+        that.listService(that.idStack);
+        that.dialogDetail = true;
+        console.log(response.data.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    listService: function listService(params) {
+      var that = this;
+      that.instance.post('listserviceonstack', {
+        "stack_id": params
+      }).then(function (response) {
+        that.service = response.data.data;
+        that.service.forEach(function (item, index) {
+          that.$set(that.service[index], "status", null);
+          that.detailServiceDB(index, item);
+        });
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    detailServiceDB: function detailServiceDB(index, item) {
+      var that = this;
+      that.instance.post('cekserviceindb', {
+        "project_id": item
+      }).then(function (response) {
+        that.service[index].status = response.data.data;
+        console.log(response.data.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    addService: function addService(id, stack_id) {
+      var that = this;
+      that.dialogAddService = true;
+      that.idService = id;
+      that.stackIdService = that.idStackDB;
+    },
+    saveService: function saveService(id, stack_id) {
+      var that = this;
+      that.instance.post('addservicetodb', {
+        "url": that.gitUrl,
+        "project_id": that.idService,
+        "remark": that.remarkRancher,
+        "stack_id": that.stackIdService
+      }).then(function (response) {
+        that.dialogAddService = false;
+        that.listService(that.idStack);
+        console.log(response);
       })["catch"](function (error) {
         console.log(response.data);
       });
@@ -38513,110 +38690,391 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-card",
+        "div",
+        { staticClass: "text-xs-center" },
         [
-          _c("v-card-title", { attrs: { "primary-title": "" } }, [
-            _c("div", [
-              _c("h3", { staticClass: "headline mb-0" }, [
-                _vm._v("Daftar Rancher Project")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("v-data-table", {
-            staticClass: "elevation-1",
-            attrs: {
-              "rows-per-page-items": _vm.rowsPerPageItems,
-              pagination: _vm.pagination,
-              headers: _vm.header,
-              items: _vm.rancherprojects
-            },
-            on: {
-              "update:pagination": function($event) {
-                _vm.pagination = $event
+          _c(
+            "v-dialog",
+            {
+              attrs: { width: "500" },
+              model: {
+                value: _vm.dialogAddService,
+                callback: function($$v) {
+                  _vm.dialogAddService = $$v
+                },
+                expression: "dialogAddService"
               }
             },
-            scopedSlots: _vm._u([
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c("td", [_vm._v(_vm._s(props.item.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.description))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.accountId))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(props.item.state))]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c(
-                          "v-tooltip",
-                          {
-                            attrs: { top: "" },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "activator",
-                                  fn: function(ref) {
-                                    var on = ref.on
-                                    return [
-                                      props.item.status == null
-                                        ? _c(
-                                            "v-btn",
-                                            _vm._g(
-                                              {
-                                                attrs: {
-                                                  fab: "",
-                                                  dark: "",
-                                                  small: "",
-                                                  color: "primary"
-                                                },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.toDB(
-                                                      props.item.id
-                                                    )
-                                                  }
-                                                }
-                                              },
-                                              on
-                                            ),
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                { attrs: { dark: "" } },
-                                                [_vm._v("save_alt")]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        : _vm._e()
-                                    ]
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          },
-                          [_vm._v(" "), _c("span", [_vm._v("Add To Database")])]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                }
-              }
-            ])
-          })
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-card-title",
+                    {
+                      staticClass: "headline grey lighten-2",
+                      attrs: { "primary-title": "" }
+                    },
+                    [_vm._v("\n          Add Service to Database\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      counter: 10,
+                                      label: "Git URL",
+                                      required: ""
+                                    },
+                                    model: {
+                                      value: _vm.gitUrl,
+                                      callback: function($$v) {
+                                        _vm.gitUrl = $$v
+                                      },
+                                      expression: "gitUrl"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      name: "input-7-1",
+                                      label: "Remark",
+                                      hint: "Hint text"
+                                    },
+                                    model: {
+                                      value: _vm.remarkRancher,
+                                      callback: function($$v) {
+                                        _vm.remarkRancher = $$v
+                                      },
+                                      expression: "remarkRancher"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-divider"),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-actions",
+                    [
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary", flat: "" },
+                          on: { click: _vm.saveService }
+                        },
+                        [_vm._v("Simpan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "primary", flat: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.dialogAddService = false
+                            }
+                          }
+                        },
+                        [_vm._v("\n            Cancel\n          ")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _vm.dialogDetail
+        ? _c(
+            "v-card",
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mb-0 black--text",
+                  attrs: { color: "white", fab: "", small: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogDetail = false
+                    }
+                  }
+                },
+                [_c("v-icon", { attrs: { dark: "" } }, [_vm._v("close")])],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                _c("div", [
+                  _c("h3", { staticClass: "headline" }, [
+                    _vm._v("List Service")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  "rows-per-page-items": _vm.rowsPerPageItems,
+                  pagination: _vm.pagination,
+                  headers: _vm.headerService,
+                  items: _vm.service
+                },
+                on: {
+                  "update:pagination": function($event) {
+                    _vm.pagination = $event
+                  }
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "items",
+                      fn: function(props) {
+                        return [
+                          _c("td", [_vm._v(_vm._s(props.item.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.name))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              props.item.status == null
+                                ? _c(
+                                    "v-btn",
+                                    {
+                                      staticClass: "ma-2 white--text",
+                                      attrs: {
+                                        color: "blue-grey",
+                                        fab: "",
+                                        small: ""
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.addService(
+                                            props.item.id,
+                                            props.item.stackId
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("v-icon", { attrs: { dark: "" } }, [
+                                        _vm._v("cloud_upload")
+                                      ])
+                                    ],
+                                    1
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  1405998548
+                )
+              })
+            ],
+            1
+          )
+        : _c(
+            "v-card",
+            [
+              _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                _c("div", [
+                  _c("h3", { staticClass: "headline mb-0" }, [
+                    _vm._v("Daftar Rancher Project")
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  "rows-per-page-items": _vm.rowsPerPageItems,
+                  pagination: _vm.pagination,
+                  headers: _vm.header,
+                  items: _vm.rancherprojects
+                },
+                on: {
+                  "update:pagination": function($event) {
+                    _vm.pagination = $event
+                  }
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "items",
+                    fn: function(props) {
+                      return [
+                        _c("td", [_vm._v(_vm._s(props.item.id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.description))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.accountId))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.state))]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { top: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          props.item.status == null
+                                            ? _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    attrs: {
+                                                      fab: "",
+                                                      dark: "",
+                                                      small: "",
+                                                      color: "primary"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.toDB(
+                                                          props.item.id
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    { attrs: { dark: "" } },
+                                                    [_vm._v("save_alt")]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Add To Database")])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { top: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          props.item.status != null
+                                            ? _c(
+                                                "v-btn",
+                                                _vm._g(
+                                                  {
+                                                    attrs: {
+                                                      fab: "",
+                                                      dark: "",
+                                                      small: "",
+                                                      color: "warning"
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.detailStack(
+                                                          props.item.id
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  on
+                                                ),
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    { attrs: { dark: "" } },
+                                                    [_vm._v("more_horiz")]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            : _vm._e()
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Detail Stack")])
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          )
     ],
     1
   )
