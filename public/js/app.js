@@ -2251,6 +2251,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StackRancherComponent",
   mounted: function mounted() {
@@ -2261,11 +2297,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      rowsPerPageItems: [25, 50, 75, 100],
+      pagination: {
+        rowsPerPage: 25
+      },
       editStack: false,
       stacks: [],
       header: [{
-        text: "ID Rancher ",
+        text: "ID Stack ",
         value: "rancher_stack_id"
+      }, {
+        text: "Name",
+        value: "name"
       }, {
         text: "Remark",
         value: "remark"
@@ -2275,7 +2318,21 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Action",
         value: "id"
-      }]
+      }],
+      headerDetail: [{
+        text: "ID Rancher ",
+        value: "rancher_project_id"
+      }, {
+        text: "Gitlab URL",
+        value: "gitlab_url"
+      }, {
+        text: "Remark",
+        value: "remark"
+      }, {
+        text: "Tanggal",
+        value: "created_at"
+      }],
+      dialogService: false
     };
   },
   methods: {
@@ -2283,6 +2340,10 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.instance.get('liststackdb').then(function (response) {
         that.stacks = response.data.data;
+        that.stacks.forEach(function (item, index) {
+          that.$set(that.stacks[index], "name", null);
+          that.detail(index, item);
+        });
         console.log(response.data);
       })["catch"](function (error) {
         console.log(response.data);
@@ -2323,6 +2384,29 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
         that.list();
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    detail: function detail(index, item) {
+      var that = this;
+      that.instance.post('detailstack', {
+        "stack_id": item.rancher_stack_id
+      }).then(function (response) {
+        that.stacks[index].name = response.data.data.name;
+        console.log(response.data.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    detailServiceStack: function detailServiceStack(params) {
+      var that = this;
+      that.instance.post('detailservicestackdb', {
+        "stack_id": params
+      }).then(function (response) {
+        that.detailServiceStackonDB = response.data.data;
+        that.dialogService = true;
+        console.log(response.data.data);
       })["catch"](function (error) {
         console.log(response.data);
       });
@@ -39104,7 +39188,74 @@ var render = function() {
   return _c(
     "v-app",
     [
-      _vm.editStack
+      _vm.dialogService
+        ? _c(
+            "v-card",
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mb-0 black--text",
+                  attrs: { color: "white", fab: "", small: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogService = false
+                    }
+                  }
+                },
+                [_c("v-icon", { attrs: { dark: "" } }, [_vm._v("close")])],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("List Service Stack")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("v-data-table", {
+                staticClass: "elevation-1",
+                attrs: {
+                  "rows-per-page-items": _vm.rowsPerPageItems,
+                  pagination: _vm.pagination,
+                  headers: _vm.headerDetail,
+                  items: _vm.detailServiceStackonDB
+                },
+                on: {
+                  "update:pagination": function($event) {
+                    _vm.pagination = $event
+                  }
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "items",
+                      fn: function(props) {
+                        return [
+                          _c("td", [
+                            _vm._v(_vm._s(props.item.rancher_project_id))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.gitlab_url))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.remark))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.created_at))])
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3032470857
+                )
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.editStack == true && _vm.dialogService == false
         ? _c(
             "v-card",
             [
@@ -39130,7 +39281,6 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   counter: 10,
-                                  rules: _vm.nameRules,
                                   label: "Name",
                                   required: "",
                                   readonly: ""
@@ -39203,7 +39353,8 @@ var render = function() {
             ],
             1
           )
-        : _c(
+        : _vm.editStack == false && _vm.dialogService == false
+        ? _c(
             "v-card",
             [
               _c("v-card-title", { attrs: { "primary-title": "" } }, [
@@ -39234,6 +39385,8 @@ var render = function() {
                       return [
                         _c("td", [_vm._v(_vm._s(props.item.rancher_stack_id))]),
                         _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(props.item.name))]),
+                        _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(props.item.remark))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(props.item.created_at))]),
@@ -39241,6 +39394,60 @@ var render = function() {
                         _c(
                           "td",
                           [
+                            _c(
+                              "v-tooltip",
+                              {
+                                attrs: { top: "" },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "activator",
+                                      fn: function(ref) {
+                                        var on = ref.on
+                                        return [
+                                          _c(
+                                            "v-btn",
+                                            _vm._g(
+                                              {
+                                                attrs: {
+                                                  fab: "",
+                                                  dark: "",
+                                                  small: "",
+                                                  color: "success"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.detailServiceStack(
+                                                      props.item.id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              on
+                                            ),
+                                            [
+                                              _c(
+                                                "v-icon",
+                                                { attrs: { dark: "" } },
+                                                [_vm._v("more_horiz")]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [_vm._v("Detail Stack")])
+                              ]
+                            ),
+                            _vm._v(" "),
                             _c(
                               "v-tooltip",
                               {
@@ -39361,6 +39568,7 @@ var render = function() {
             ],
             1
           )
+        : _vm._e()
     ],
     1
   )
