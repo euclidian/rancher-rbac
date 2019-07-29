@@ -2287,6 +2287,70 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StackRancherComponent",
   mounted: function mounted() {
@@ -2331,8 +2395,12 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Tanggal",
         value: "created_at"
+      }, {
+        text: "Action",
+        value: "rancher_project_id"
       }],
-      dialogService: false
+      dialogService: false,
+      dialogFormService: false
     };
   },
   methods: {
@@ -2401,12 +2469,57 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailServiceStack: function detailServiceStack(params) {
       var that = this;
+      that.detailIdService = params;
       that.instance.post('detailservicestackdb', {
         "stack_id": params
       }).then(function (response) {
         that.detailServiceStackonDB = response.data.data;
         that.dialogService = true;
         console.log(response.data.data);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    formEditService: function formEditService(params) {
+      var that = this;
+      that.instance.post('detailservice', {
+        "id": params
+      }).then(function (response) {
+        that.dialogFormService = true;
+        that.idService = response.data.data.id;
+        that.gitURL = response.data.data.gitlab_url;
+        that.rancherProjectId = response.data.data.rancher_project_id;
+        that.remarkService = response.data.data.remark;
+        that.stackIdService = response.data.data.stack_id;
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    deleteService: function deleteService(params) {
+      var that = this;
+      that.instance.post('deleteservicestackdb', {
+        "id": params
+      }).then(function (response) {
+        that.dialogFormService = false;
+        that.dialogService = false;
+        that.detailServiceStack(that.detailIdService);
+      })["catch"](function (error) {
+        console.log(response.data);
+      });
+    },
+    editService: function editService() {
+      var that = this;
+      that.instance.post('updateservicetodb', {
+        "id": that.idService,
+        "url": that.gitURL,
+        "project_id": that.rancherProjectId,
+        "remark": that.remarkService,
+        "stack_id": that.stackIdService
+      }).then(function (response) {
+        that.dialogFormService = false;
+        that.dialogService = false;
+        that.detailServiceStack(that.stackIdService);
       })["catch"](function (error) {
         console.log(response.data);
       });
@@ -39188,7 +39301,139 @@ var render = function() {
   return _c(
     "v-app",
     [
-      _vm.dialogService
+      _vm.dialogFormService
+        ? _c(
+            "v-card",
+            [
+              _c(
+                "v-btn",
+                {
+                  staticClass: "mb-0 black--text",
+                  attrs: { color: "white", fab: "", small: "" },
+                  on: {
+                    click: function($event) {
+                      _vm.dialogFormService = false
+                    }
+                  }
+                },
+                [_c("v-icon", { attrs: { dark: "" } }, [_vm._v("close")])],
+                1
+              ),
+              _vm._v(" "),
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("Edit Service Stack")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  counter: 10,
+                                  label: "Name",
+                                  required: "",
+                                  readonly: ""
+                                },
+                                model: {
+                                  value: _vm.rancherProjectId,
+                                  callback: function($$v) {
+                                    _vm.rancherProjectId = $$v
+                                  },
+                                  expression: "rancherProjectId"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: {
+                                  counter: 10,
+                                  label: "Name",
+                                  required: ""
+                                },
+                                model: {
+                                  value: _vm.gitURL,
+                                  callback: function($$v) {
+                                    _vm.gitURL = $$v
+                                  },
+                                  expression: "gitURL"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-textarea", {
+                                attrs: {
+                                  name: "input-7-1",
+                                  label: "Remark",
+                                  hint: "Hint text"
+                                },
+                                model: {
+                                  value: _vm.remarkService,
+                                  callback: function($$v) {
+                                    _vm.remarkService = $$v
+                                  },
+                                  expression: "remarkService"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.dialogFormService = false
+                        }
+                      }
+                    },
+                    [_vm._v("Batal")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "primary", flat: "" },
+                      on: { click: _vm.editService }
+                    },
+                    [_vm._v("Simpan")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.dialogService == true && _vm.dialogFormService == false
         ? _c(
             "v-card",
             [
@@ -39240,14 +39485,130 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(props.item.remark))]),
                           _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.created_at))])
+                          _c("td", [_vm._v(_vm._s(props.item.created_at))]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { top: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  attrs: {
+                                                    fab: "",
+                                                    dark: "",
+                                                    small: "",
+                                                    color: "warning"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.formEditService(
+                                                        props.item.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { dark: "" } },
+                                                  [_vm._v("edit")]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Edit Stack in Database")])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { top: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  attrs: {
+                                                    fab: "",
+                                                    dark: "",
+                                                    small: "",
+                                                    color: "error"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.deleteService(
+                                                        props.item.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { dark: "" } },
+                                                  [_vm._v("delete")]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v("Delete Stack in Database")
+                                  ])
+                                ]
+                              )
+                            ],
+                            1
+                          )
                         ]
                       }
                     }
                   ],
                   null,
                   false,
-                  3032470857
+                  2080905042
                 )
               })
             ],
@@ -39255,7 +39616,9 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.editStack == true && _vm.dialogService == false
+      _vm.editStack == true &&
+      _vm.dialogService == false &&
+      _vm.dialogFormService == false
         ? _c(
             "v-card",
             [
@@ -39353,7 +39716,9 @@ var render = function() {
             ],
             1
           )
-        : _vm.editStack == false && _vm.dialogService == false
+        : _vm.editStack == false &&
+          _vm.dialogService == false &&
+          _vm.dialogFormService == false
         ? _c(
             "v-card",
             [
