@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd986289a6cf0f3c195ac6fc7cff4fa4",
+    "content-hash": "dc73b8505c1097773fdcf410241af71b",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -5018,8 +5018,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
