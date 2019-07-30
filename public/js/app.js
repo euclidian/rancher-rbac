@@ -1688,6 +1688,80 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["idProject", "showEnvironment"],
+  data: function data() {
+    return {
+      headers: [{
+        text: 'Key',
+        value: 'key'
+      }, {
+        text: 'Value',
+        value: 'value'
+      }],
+      environments: []
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    console.log("IDNYA", that.idProject);
+    axios.post("/tiketux/rancher/stack/api/detailservicestack", {
+      id: that.idProject
+    }).then(function (response) {
+      console.log(response.data);
+      that.environments = response.data.data;
+    })["catch"](function (error) {
+      console.log(error.response.data);
+    });
+  },
+  methods: {
+    close: function close() {
+      this.$emit("closeEnvironments");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -2176,6 +2250,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EnvironmentComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EnvironmentComponent.vue */ "./resources/js/components/EnvironmentComponent.vue");
 //
 //
 //
@@ -2351,11 +2426,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    "rancher-environment": _EnvironmentComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   name: "StackRancherComponent",
   mounted: function mounted() {
     this.instance = axios.create({
-      baseURL: '/tiketux/rancher/stack/api/'
+      baseURL: "/tiketux/rancher/stack/api/"
     });
     this.list();
   },
@@ -2400,13 +2484,22 @@ __webpack_require__.r(__webpack_exports__);
         value: "rancher_project_id"
       }],
       dialogService: false,
-      dialogFormService: false
+      dialogFormService: false,
+      idProject: 0,
+      showEnvironment: false
     };
   },
   methods: {
+    showEnvironments: function showEnvironments(id) {
+      this.idProject = id;
+      this.showEnvironment = true;
+    },
+    closeEnvironments: function closeEnvironments() {
+      this.showEnvironment = false;
+    },
     list: function list() {
       var that = this;
-      that.instance.get('liststackdb').then(function (response) {
+      that.instance.get("liststackdb").then(function (response) {
         that.stacks = response.data.data;
         that.stacks.forEach(function (item, index) {
           that.$set(that.stacks[index], "name", null);
@@ -2420,8 +2513,8 @@ __webpack_require__.r(__webpack_exports__);
     formEditStack: function formEditStack(params) {
       var that = this;
       that.id_stack = params;
-      that.instance.post('cekstackdb', {
-        "id_stack": params
+      that.instance.post("cekstackdb", {
+        id_stack: params
       }).then(function (response) {
         that.detailstack = response.data.data;
         that.rancherStackId = response.data.data.rancher_stack_id;
@@ -2434,9 +2527,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       var that = this;
-      that.instance.post('addstackdb', {
-        "stack_id": that.rancherStackId,
-        "remark": that.remarkStack
+      that.instance.post("addstackdb", {
+        stack_id: that.rancherStackId,
+        remark: that.remarkStack
       }).then(function (response) {
         console.log(response);
         that.editStack = false;
@@ -2447,8 +2540,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteStack: function deleteStack(params) {
       var that = this;
-      that.instance.post('deletestackdb', {
-        "stack_id": params
+      that.instance.post("deletestackdb", {
+        stack_id: params
       }).then(function (response) {
         console.log(response);
         that.list();
@@ -2458,8 +2551,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     detail: function detail(index, item) {
       var that = this;
-      that.instance.post('detailstack', {
-        "stack_id": item.rancher_stack_id
+      that.instance.post("detailstack", {
+        stack_id: item.rancher_stack_id
       }).then(function (response) {
         that.stacks[index].name = response.data.data.name;
         console.log(response.data.data);
@@ -2470,8 +2563,8 @@ __webpack_require__.r(__webpack_exports__);
     detailServiceStack: function detailServiceStack(params) {
       var that = this;
       that.detailIdService = params;
-      that.instance.post('detailservicestackdb', {
-        "stack_id": params
+      that.instance.post("detailservicestackdb", {
+        stack_id: params
       }).then(function (response) {
         that.detailServiceStackonDB = response.data.data;
         that.dialogService = true;
@@ -2482,8 +2575,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     formEditService: function formEditService(params) {
       var that = this;
-      that.instance.post('detailservice', {
-        "id": params
+      that.instance.post("detailservice", {
+        id: params
       }).then(function (response) {
         that.dialogFormService = true;
         that.idService = response.data.data.id;
@@ -2498,8 +2591,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteService: function deleteService(params) {
       var that = this;
-      that.instance.post('deleteservicestackdb', {
-        "id": params
+      that.instance.post("deleteservicestackdb", {
+        id: params
       }).then(function (response) {
         that.dialogFormService = false;
         that.dialogService = false;
@@ -2510,12 +2603,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     editService: function editService() {
       var that = this;
-      that.instance.post('updateservicetodb', {
-        "id": that.idService,
-        "url": that.gitURL,
-        "project_id": that.rancherProjectId,
-        "remark": that.remarkService,
-        "stack_id": that.stackIdService
+      that.instance.post("updateservicetodb", {
+        id: that.idService,
+        url: that.gitURL,
+        project_id: that.rancherProjectId,
+        remark: that.remarkService,
+        stack_id: that.stackIdService
       }).then(function (response) {
         that.dialogFormService = false;
         that.dialogService = false;
@@ -38522,6 +38615,129 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { persistent: "", width: "900" },
+      model: {
+        value: _vm.showEnvironment,
+        callback: function($$v) {
+          _vm.showEnvironment = $$v
+        },
+        expression: "showEnvironment"
+      }
+    },
+    [
+      _c(
+        "v-card",
+        [
+          _c(
+            "v-card-title",
+            {
+              staticClass: "headline grey lighten-2",
+              attrs: { "primary-title": "" }
+            },
+            [_vm._v("Environment List")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-container",
+                { attrs: { "grid-list-md": "" } },
+                [
+                  _c(
+                    "v-layout",
+                    { attrs: { wrap: "" } },
+                    [
+                      _c(
+                        "v-flex",
+                        { attrs: { xs12: "" } },
+                        [
+                          _c("v-data-table", {
+                            staticClass: "elevation-1",
+                            attrs: {
+                              headers: _vm.headers,
+                              items: _vm.environments
+                            },
+                            scopedSlots: _vm._u([
+                              {
+                                key: "items",
+                                fn: function(props) {
+                                  return [
+                                    _c("td", [_vm._v(_vm._s(props.item.key))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(props.item.value))])
+                                  ]
+                                }
+                              }
+                            ])
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("v-divider"),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { color: "error", flat: "" },
+                  on: {
+                    click: function($event) {
+                      return _vm.close()
+                    }
+                  }
+                },
+                [_vm._v("Close")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -39301,6 +39517,16 @@ var render = function() {
   return _c(
     "v-app",
     [
+      _vm.showEnvironment
+        ? _c("rancher-environment", {
+            attrs: {
+              showEnvironment: _vm.showEnvironment,
+              idProject: _vm.idProject
+            },
+            on: { closeEnvironments: _vm.closeEnvironments }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _vm.dialogFormService
         ? _c(
             "v-card",
@@ -39509,6 +39735,60 @@ var render = function() {
                                                     fab: "",
                                                     dark: "",
                                                     small: "",
+                                                    color: "blue"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.showEnvironments(
+                                                        props.item.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                on
+                                              ),
+                                              [
+                                                _c(
+                                                  "v-icon",
+                                                  { attrs: { dark: "" } },
+                                                  [_vm._v("info")]
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    null,
+                                    true
+                                  )
+                                },
+                                [
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v("Environments")])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-tooltip",
+                                {
+                                  attrs: { top: "" },
+                                  scopedSlots: _vm._u(
+                                    [
+                                      {
+                                        key: "activator",
+                                        fn: function(ref) {
+                                          var on = ref.on
+                                          return [
+                                            _c(
+                                              "v-btn",
+                                              _vm._g(
+                                                {
+                                                  attrs: {
+                                                    fab: "",
+                                                    dark: "",
+                                                    small: "",
                                                     color: "warning"
                                                   },
                                                   on: {
@@ -39608,7 +39888,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2080905042
+                  3148785251
                 )
               })
             ],
@@ -81042,6 +81322,75 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/EnvironmentComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/EnvironmentComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EnvironmentComponent.vue?vue&type=template&id=c4d407d6& */ "./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6&");
+/* harmony import */ var _EnvironmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EnvironmentComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EnvironmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EnvironmentComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EnvironmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EnvironmentComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EnvironmentComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EnvironmentComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EnvironmentComponent.vue?vue&type=template&id=c4d407d6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EnvironmentComponent.vue?vue&type=template&id=c4d407d6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EnvironmentComponent_vue_vue_type_template_id_c4d407d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
@@ -81405,8 +81754,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/yunita/github/rancher-rbac/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/yunita/github/rancher-rbac/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /media/ahmadhasya/Local disk1/Tiketux/rancher-rbac/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /media/ahmadhasya/Local disk1/Tiketux/rancher-rbac/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
