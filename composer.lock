@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc73b8505c1097773fdcf410241af71b",
+    "content-hash": "2e59545857fbade388713ac363bb27c3",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -3726,16 +3726,16 @@
         },
         {
             "name": "tiketux/rancher-projects",
-            "version": "0.1.7",
+            "version": "0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/rancher-projects.git",
-                "reference": "45aba890730f139a1e3fa3a9a82009e1e6fbca44"
+                "reference": "066b51ad45c027a51c0d99aec7654b3f3c17f3fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/45aba890730f139a1e3fa3a9a82009e1e6fbca44",
-                "reference": "45aba890730f139a1e3fa3a9a82009e1e6fbca44",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/066b51ad45c027a51c0d99aec7654b3f3c17f3fe",
+                "reference": "066b51ad45c027a51c0d99aec7654b3f3c17f3fe",
                 "shasum": ""
             },
             "require": {
@@ -3761,23 +3761,23 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/rancher-projects/tree/0.1.7",
+                "source": "https://github.com/euclidian/rancher-projects/tree/develop",
                 "issues": "https://github.com/euclidian/rancher-projects/issues"
             },
-            "time": "2019-07-29T03:13:03+00:00"
+            "time": "2019-07-30T02:02:11+00:00"
         },
         {
             "name": "tiketux/usermanagement",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/user-management.git",
-                "reference": "93fb7d4f56af6dadb21d8ed65310c81ca140764c"
+                "reference": "6cf5a3e8d07602203046c0e6b1589e3ab44dd9db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/user-management/zipball/93fb7d4f56af6dadb21d8ed65310c81ca140764c",
-                "reference": "93fb7d4f56af6dadb21d8ed65310c81ca140764c",
+                "url": "https://api.github.com/repos/euclidian/user-management/zipball/6cf5a3e8d07602203046c0e6b1589e3ab44dd9db",
+                "reference": "6cf5a3e8d07602203046c0e6b1589e3ab44dd9db",
                 "shasum": ""
             },
             "type": "library",
@@ -3800,10 +3800,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/user-management/tree/0.1.1",
+                "source": "https://github.com/euclidian/user-management/tree/develop",
                 "issues": "https://github.com/euclidian/user-management/issues"
             },
-            "time": "2019-07-15T05:25:54+00:00"
+            "time": "2019-07-16T03:40:09+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
