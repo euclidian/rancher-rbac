@@ -10644,3 +10644,7 @@ a.text-dark:focus {
   }
 }
 
+a.v-list__tile:hover {
+  text-decoration: none;
+}
+

@@ -11,6 +11,8 @@ import VueRouter from 'vue-router'
 import UserManagementComponent from "./components/UserManagementComponent.vue";
 import RancherProjectsComponent from "./components/RancherProjectsComponent.vue";
 import StackRancherComponent from "./components/StackRancherComponent.vue";
+import StackTemplateComponent from "./components/StackTemplateComponent.vue";
+import StackConfigComponent from "./components/StackConfigComponent.vue";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -60,6 +62,16 @@ const router = new VueRouter({
             name: 'stack',
             component: StackRancherComponent
         },
+        {
+            path: '/stack_template',
+            name: 'stack_template',
+            component: StackTemplateComponent
+        },
+        {
+            path: '/stack_config',
+            name: 'stack_config',
+            component: StackConfigComponent
+        }
     ],
 });
 

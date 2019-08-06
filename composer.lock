@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e59545857fbade388713ac363bb27c3",
+    "content-hash": "54d42f2a5b6faf5a1bb798de5e790a09",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -3726,16 +3726,16 @@
         },
         {
             "name": "tiketux/rancher-projects",
-            "version": "0.1.8",
+            "version": "0.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/rancher-projects.git",
-                "reference": "066b51ad45c027a51c0d99aec7654b3f3c17f3fe"
+                "reference": "3a6f7d6b2d540824a4de37922e79e7eeef4480d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/066b51ad45c027a51c0d99aec7654b3f3c17f3fe",
-                "reference": "066b51ad45c027a51c0d99aec7654b3f3c17f3fe",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/3a6f7d6b2d540824a4de37922e79e7eeef4480d1",
+                "reference": "3a6f7d6b2d540824a4de37922e79e7eeef4480d1",
                 "shasum": ""
             },
             "require": {
@@ -3761,10 +3761,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/euclidian/rancher-projects/tree/develop",
+                "source": "https://github.com/euclidian/rancher-projects/tree/0.1.9",
                 "issues": "https://github.com/euclidian/rancher-projects/issues"
             },
-            "time": "2019-07-30T02:02:11+00:00"
+            "time": "2019-08-06T08:02:32+00:00"
         },
         {
             "name": "tiketux/usermanagement",
