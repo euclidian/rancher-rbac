@@ -1865,6 +1865,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeComponent",
   data: function data() {
@@ -2234,6 +2250,246 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
       })["catch"](function (error) {
         console.log(response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.list();
+  },
+  data: function data() {
+    return {
+      loading: false,
+      addconfig: false,
+      name: null,
+      configs: {
+        rancher: [],
+        docker: []
+      },
+      detailconfig: false,
+      docker_compose: null,
+      rancher_compose: null,
+      data_configs: [],
+      template_id: null,
+      templates: [],
+      errortxt: null,
+      headers: [{
+        text: "Config Name",
+        value: "name"
+      }, {
+        text: "Actions",
+        value: "name",
+        sortable: false
+      }]
+    };
+  },
+  methods: {
+    showAddConfig: function showAddConfig() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/template/list").then(function (response) {
+        console.log(response.data.data);
+        that.templates = response.data.data;
+        that.template_id = response.data.data[0].id;
+        that.selectTemplateChanged();
+        that.addconfig = true;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    selectTemplateChanged: function selectTemplateChanged() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/detail_template/" + that.template_id).then(function (response) {
+        console.log(response.data.data);
+        that.configs = response.data.data;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        that.errortxt = error.response.data.errors;
+      });
+    },
+    save: function save() {
+      var that = this;
+      that.loading = true;
+      axios.post("/tiketux/rancherprojects/api/config/save", {
+        template_id: that.template_id,
+        name: that.name,
+        configs: that.configs
+      }).then(function (response) {
+        console.log(response.data.data);
+        that.addconfig = false;
+        that.name = null;
+        that.loading = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        that.errortxt = error.response.data.errors;
+      });
+    },
+    list: function list() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/list").then(function (response) {
+        console.log(response.data.data);
+        that.data_configs = response.data.data;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    detail: function detail(id) {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/detail/" + id).then(function (response) {
+        console.log(response.data.data);
+        that.detailconfig = true;
+        that.template_id = response.data.data.id;
+        that.name = response.data.data.name;
+        that.docker_compose = response.data.data.generated_docker_compose_yml;
+        that.rancher_compose = response.data.data.generated_rancher_compose_yml;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    deleteConfig: function deleteConfig(id) {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/delete/" + id).then(function (response) {
+        console.log(response.data.data);
+        that.loading = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(error.response.data);
       });
     }
   }
@@ -2615,6 +2871,173 @@ __webpack_require__.r(__webpack_exports__);
         that.detailServiceStack(that.stackIdService);
       })["catch"](function (error) {
         console.log(response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.list();
+  },
+  data: function data() {
+    return {
+      loading: false,
+      addedit: false,
+      name: null,
+      docker_compose: null,
+      rancher_compose: null,
+      template_id: null,
+      templates: [],
+      errortxt: null,
+      headers: [{
+        text: "Template Name",
+        value: "name"
+      }, {
+        text: "Actions",
+        value: "name",
+        sortable: false
+      }]
+    };
+  },
+  methods: {
+    closeAddTemplate: function closeAddTemplate() {
+      this.addedit = false;
+      this.name = null;
+      this.docker_compose = null;
+      this.rancher_compose = null;
+      this.template_id = null;
+    },
+    save: function save() {
+      var that = this;
+      that.loading = true;
+      axios.post("/tiketux/rancherprojects/api/template/save", {
+        template_id: that.template_id,
+        name: that.name,
+        docker_compose_yml: that.docker_compose,
+        rancher_compose_yml: that.rancher_compose
+      }).then(function (response) {
+        console.log(response.data.data);
+        that.closeAddTemplate();
+        that.loading = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        that.errortxt = error.response.data.errors;
+      });
+    },
+    list: function list() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/template/list").then(function (response) {
+        console.log(response.data.data);
+        that.templates = response.data.data;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    detail: function detail(id) {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/template/detail/" + id).then(function (response) {
+        console.log(response.data.data);
+        that.addedit = true;
+        that.template_id = response.data.data.id;
+        that.name = response.data.data.name;
+        that.docker_compose = response.data.data.docker_compose_yml;
+        that.rancher_compose = response.data.data.rancher_compose_yml;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    deleteTemplate: function deleteTemplate(id) {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/template/delete/" + id).then(function (response) {
+        console.log(response.data.data);
+        that.loading = false;
+        that.list();
+      })["catch"](function (error) {
+        console.log(error.response.data);
       });
     }
   }
@@ -38889,6 +39312,44 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "v-list-tile",
+                { attrs: { to: "/stack_template" } },
+                [
+                  _c(
+                    "v-list-tile-action",
+                    [_c("v-icon", [_vm._v("dashboard")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-content",
+                    [_c("v-list-tile-title", [_vm._v("Stack Template")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-tile",
+                { attrs: { to: "/stack_config" } },
+                [
+                  _c(
+                    "v-list-tile-action",
+                    [_c("v-icon", [_vm._v("settings")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-list-tile-content",
+                    [_c("v-list-tile-title", [_vm._v("Stack Config")])],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-list-tile",
                 {
                   on: {
                     click: function($event) {
@@ -39488,6 +39949,439 @@ var render = function() {
             ],
             1
           )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-btn",
+        {
+          attrs: {
+            fixed: "",
+            dark: "",
+            fab: "",
+            bottom: "",
+            right: "",
+            color: "blue"
+          },
+          on: { click: _vm.showAddConfig }
+        },
+        [_c("v-icon", [_vm._v("add")])],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "800px" },
+          model: {
+            value: _vm.detailconfig,
+            callback: function($$v) {
+              _vm.detailconfig = $$v
+            },
+            expression: "detailconfig"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("Stack Config")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: { label: "Template Name" },
+                                model: {
+                                  value: _vm.name,
+                                  callback: function($$v) {
+                                    _vm.name = $$v
+                                  },
+                                  expression: "name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: { label: "Docker Compose Config" },
+                                model: {
+                                  value: _vm.docker_compose,
+                                  callback: function($$v) {
+                                    _vm.docker_compose = $$v
+                                  },
+                                  expression: "docker_compose"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: { label: "Rancher Compose Config" },
+                                model: {
+                                  value: _vm.rancher_compose,
+                                  callback: function($$v) {
+                                    _vm.rancher_compose = $$v
+                                  },
+                                  expression: "rancher_compose"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.detailconfig = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "500px" },
+          model: {
+            value: _vm.addconfig,
+            callback: function($$v) {
+              _vm.addconfig = $$v
+            },
+            expression: "addconfig"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("Stack Config")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-select", {
+                                attrs: {
+                                  "item-value": "id",
+                                  "item-text": "name",
+                                  items: _vm.templates,
+                                  label: "Template"
+                                },
+                                on: { change: _vm.selectTemplateChanged },
+                                model: {
+                                  value: _vm.template_id,
+                                  callback: function($$v) {
+                                    _vm.template_id = $$v
+                                  },
+                                  expression: "template_id"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  "error-messages":
+                                    _vm.errortxt != null
+                                      ? _vm.errortxt.name
+                                      : "",
+                                  label: "Config Name"
+                                },
+                                model: {
+                                  value: _vm.name,
+                                  callback: function($$v) {
+                                    _vm.name = $$v
+                                  },
+                                  expression: "name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _vm.configs.docker.length
+                            ? _c("v-subheader", [_vm._v("Docker Config")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.configs.docker, function(items) {
+                            return _c(
+                              "v-flex",
+                              { key: items.key, attrs: { xs12: "" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    "error-messages":
+                                      _vm.errortxt != null
+                                        ? _vm.errortxt[
+                                            "configs.docker." +
+                                              _vm.index +
+                                              ".value"
+                                          ]
+                                        : "",
+                                    label: items.key
+                                  },
+                                  model: {
+                                    value: items.value,
+                                    callback: function($$v) {
+                                      _vm.$set(items, "value", $$v)
+                                    },
+                                    expression: "items.value"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          }),
+                          _vm._v(" "),
+                          _vm.configs.rancher.length
+                            ? _c("v-subheader", [_vm._v("Rancher Config")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm._l(_vm.configs.rancher, function(items) {
+                            return _c(
+                              "v-flex",
+                              { key: items.key, attrs: { xs12: "" } },
+                              [
+                                _c("v-text-field", {
+                                  attrs: {
+                                    "error-messages":
+                                      _vm.errortxt != null
+                                        ? _vm.errortxt.configs.rancher.index
+                                            .value
+                                        : "",
+                                    label: items.key
+                                  },
+                                  model: {
+                                    value: items.value,
+                                    callback: function($$v) {
+                                      _vm.$set(items, "value", $$v)
+                                    },
+                                    expression: "items.value"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.addconfig = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", flat: "" },
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
+        [
+          _c("v-toolbar-title", [_vm._v("List Stack Config")]),
+          _vm._v(" "),
+          _c("v-spacer")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: {
+          headers: _vm.headers,
+          loading: _vm.loading,
+          items: _vm.data_configs
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.name))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          outline: "",
+                          small: "",
+                          fab: "",
+                          color: "error"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteConfig(props.item.id)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("delete")])],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          outline: "",
+                          small: "",
+                          fab: "",
+                          color: "blue"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.detail(props.item.id)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("info")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )
@@ -40214,6 +41108,275 @@ var render = function() {
             1
           )
         : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-btn",
+        {
+          attrs: {
+            fixed: "",
+            dark: "",
+            fab: "",
+            bottom: "",
+            right: "",
+            color: "blue"
+          },
+          on: {
+            click: function($event) {
+              _vm.addedit = true
+            }
+          }
+        },
+        [_c("v-icon", [_vm._v("add")])],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "800px" },
+          model: {
+            value: _vm.addedit,
+            callback: function($$v) {
+              _vm.addedit = $$v
+            },
+            expression: "addedit"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", [
+                _c("span", { staticClass: "headline" }, [
+                  _vm._v("Stack Template")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-text",
+                [
+                  _c(
+                    "v-container",
+                    { attrs: { "grid-list-md": "" } },
+                    [
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  "error-messages":
+                                    _vm.errortxt != null
+                                      ? _vm.errortxt.name
+                                      : "",
+                                  label: "Template Name"
+                                },
+                                model: {
+                                  value: _vm.name,
+                                  callback: function($$v) {
+                                    _vm.name = $$v
+                                  },
+                                  expression: "name"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  "error-messages":
+                                    _vm.errortxt != null
+                                      ? _vm.errortxt.docker_compose_yml
+                                      : "",
+                                  label: "Docker Compose Config"
+                                },
+                                model: {
+                                  value: _vm.docker_compose,
+                                  callback: function($$v) {
+                                    _vm.docker_compose = $$v
+                                  },
+                                  expression: "docker_compose"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  "error-messages":
+                                    _vm.errortxt != null
+                                      ? _vm.errortxt.rancher_compose_yml
+                                      : "",
+                                  label: "Rancher Compose Config"
+                                },
+                                model: {
+                                  value: _vm.rancher_compose,
+                                  callback: function($$v) {
+                                    _vm.rancher_compose = $$v
+                                  },
+                                  expression: "rancher_compose"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "error", flat: "" },
+                      on: { click: _vm.closeAddTemplate }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", flat: "" },
+                      on: { click: _vm.save }
+                    },
+                    [_vm._v("Save")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-toolbar",
+        { attrs: { flat: "", color: "white" } },
+        [
+          _c("v-toolbar-title", [_vm._v("List Stack Template")]),
+          _vm._v(" "),
+          _c("v-spacer")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("v-data-table", {
+        staticClass: "elevation-1",
+        attrs: {
+          headers: _vm.headers,
+          loading: _vm.loading,
+          items: _vm.templates
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "items",
+            fn: function(props) {
+              return [
+                _c("td", [_vm._v(_vm._s(props.item.name))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          outline: "",
+                          small: "",
+                          fab: "",
+                          color: "error"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteTemplate(props.item.id)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("delete")])],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-btn",
+                      {
+                        attrs: {
+                          outline: "",
+                          small: "",
+                          fab: "",
+                          color: "success"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.detail(props.item.id)
+                          }
+                        }
+                      },
+                      [_c("v-icon", [_vm._v("edit")])],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )
@@ -81202,6 +82365,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_UserManagementComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/UserManagementComponent.vue */ "./resources/js/components/UserManagementComponent.vue");
 /* harmony import */ var _components_RancherProjectsComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/RancherProjectsComponent.vue */ "./resources/js/components/RancherProjectsComponent.vue");
 /* harmony import */ var _components_StackRancherComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/StackRancherComponent.vue */ "./resources/js/components/StackRancherComponent.vue");
+/* harmony import */ var _components_StackTemplateComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/StackTemplateComponent.vue */ "./resources/js/components/StackTemplateComponent.vue");
+/* harmony import */ var _components_StackConfigComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/StackConfigComponent.vue */ "./resources/js/components/StackConfigComponent.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -81210,6 +82375,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
  // Ensure you are using css-loader
+
+
 
 
 
@@ -81255,6 +82422,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/stack',
     name: 'stack',
     component: _components_StackRancherComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
+    path: '/stack_template',
+    name: 'stack_template',
+    component: _components_StackTemplateComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  }, {
+    path: '/stack_config',
+    name: 'stack_config',
+    component: _components_StackConfigComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   }]
 });
 var app = new Vue({
@@ -81598,6 +82773,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/StackConfigComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/StackConfigComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StackConfigComponent.vue?vue&type=template&id=465a10c4& */ "./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4&");
+/* harmony import */ var _StackConfigComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StackConfigComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StackConfigComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/StackConfigComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackConfigComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StackConfigComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackConfigComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackConfigComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./StackConfigComponent.vue?vue&type=template&id=465a10c4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackConfigComponent.vue?vue&type=template&id=465a10c4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackConfigComponent_vue_vue_type_template_id_465a10c4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/StackRancherComponent.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/components/StackRancherComponent.vue ***!
@@ -81662,6 +82906,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackRancherComponent_vue_vue_type_template_id_bf95fa4e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/StackTemplateComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/StackTemplateComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6& */ "./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6&");
+/* harmony import */ var _StackTemplateComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StackTemplateComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StackTemplateComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/StackTemplateComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackTemplateComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./StackTemplateComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackTemplateComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StackTemplateComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/StackTemplateComponent.vue?vue&type=template&id=5a7b6aa6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_StackTemplateComponent_vue_vue_type_template_id_5a7b6aa6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
