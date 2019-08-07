@@ -13,6 +13,7 @@ import RancherProjectsComponent from "./components/RancherProjectsComponent.vue"
 import StackRancherComponent from "./components/StackRancherComponent.vue";
 import StackTemplateComponent from "./components/StackTemplateComponent.vue";
 import StackConfigComponent from "./components/StackConfigComponent.vue";
+import colors from "vuetify/es5/util/colors";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -36,7 +37,7 @@ window.axios.defaults.headers.common = {
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('home-component', require('./components/HomeComponent.vue').default);
+Vue.component('home-component', require('./src/App.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -79,3 +80,9 @@ const app = new Vue({
     el: '#app',
     router,
 });
+Vue.prototype.$vuetify.theme = {
+    primary: colors.lightBlue.darken2,
+    secondary: colors.grey.darken1,
+    accent: colors.shades.black,
+    error: colors.red.accent3
+  };
