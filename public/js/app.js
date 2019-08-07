@@ -2094,16 +2094,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RancherProjectsComponent",
   mounted: function mounted() {
     this.instance = axios.create({
-      baseURL: '/tiketux/rancher/stack/api/'
+      baseURL: "/tiketux/rancher/stack/api/"
     });
     this.list();
   },
   data: function data() {
     return {
+      loading: false,
+      addstack: false,
       dialog: false,
       dialogDetail: false,
       dialogAddService: false,
@@ -2145,13 +2184,69 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: "Action",
         value: "id"
-      }]
+      }],
+      configs: [],
+      config_id: null,
+      stack_name: null,
+      stack_description: null,
+      docker_compose: null,
+      rancher_compose: null
     };
   },
   methods: {
+    showAddStack: function showAddStack() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/list").then(function (response) {
+        console.log(response.data.data);
+        that.addstack = true;
+        that.configs = response.data.data;
+        that.config_id = response.data.data[0].id;
+        that.selectConfigChanged();
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    selectConfigChanged: function selectConfigChanged() {
+      var that = this;
+      that.loading = true;
+      axios.get("/tiketux/rancherprojects/api/config/detail/" + that.config_id).then(function (response) {
+        that.rancher_compose = response.data.data.generated_rancher_compose_yml;
+        that.docker_compose = response.data.data.generated_docker_compose_yml;
+        console.log(response.data.data);
+        that.errortxt = null;
+        that.loading = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        that.errortxt = error.response.data.errors;
+      });
+    },
+    saveStack: function saveStack() {
+      var _this = this;
+
+      var that = this;
+      that.loading = true;
+      axios.post("/tiketux/rancher/stack/api/addstack", {
+        name: that.stack_name,
+        description: that.stack_description,
+        config_id: that.config_id
+      }).then(function (response) {
+        console.log(response.data.data);
+        that.stack_name = null;
+        that.stack_description = null;
+        that.config_id = null;
+        that.addstack = false;
+        that.loading = false;
+
+        _this.list();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     list: function list() {
       var that = this;
-      that.instance.get('liststack').then(function (response) {
+      that.instance.get("liststack").then(function (response) {
         that.rancherprojects = response.data;
         that.rancherprojects.forEach(function (item, index) {
           that.$set(that.rancherprojects[index], "status", null);
@@ -2169,20 +2264,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     detail: function detail(index, item) {
       var that = this;
-      that.instance.post('cekstackdb', {
-        "id_stack": item.id
+      that.loading = true;
+      that.instance.post("cekstackdb", {
+        id_stack: item.id
       }).then(function (response) {
-        that.rancherprojects[index].status = response.data.data;
-        console.log(response.data.data);
+        that.rancherprojects[index].status = response.data.data; // console.log(response.data.data);
+
+        that.loading = false;
       })["catch"](function (error) {
         console.log(response.data);
       });
     },
     save: function save() {
       var that = this;
-      that.instance.post('addstackdb', {
-        "stack_id": that.id_rancher,
-        "remark": that.remark
+      that.instance.post("addstackdb", {
+        stack_id: that.id_rancher,
+        remark: that.remark
       }).then(function (response) {
         console.log(response);
         that.dialog = false;
@@ -2193,8 +2290,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailStack: function detailStack(params) {
       var that = this;
-      that.instance.post('cekstackdb', {
-        "id_stack": params
+      that.instance.post("cekstackdb", {
+        id_stack: params
       }).then(function (response) {
         that.idStackDB = response.data.data.id;
         that.idStack = response.data.data.rancher_stack_id;
@@ -2207,8 +2304,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     listService: function listService(params) {
       var that = this;
-      that.instance.post('listserviceonstack', {
-        "stack_id": params
+      that.instance.post("listserviceonstack", {
+        stack_id: params
       }).then(function (response) {
         that.service = response.data.data;
         that.service.forEach(function (item, index) {
@@ -2222,8 +2319,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     detailServiceDB: function detailServiceDB(index, item) {
       var that = this;
-      that.instance.post('cekserviceindb', {
-        "project_id": item
+      that.instance.post("cekserviceindb", {
+        project_id: item
       }).then(function (response) {
         that.service[index].status = response.data.data;
         console.log(response.data.data);
@@ -2239,11 +2336,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveService: function saveService(id, stack_id) {
       var that = this;
-      that.instance.post('addservicetodb', {
-        "url": that.gitUrl,
-        "project_id": that.idService,
-        "remark": that.remarkRancher,
-        "stack_id": that.stackIdService
+      that.instance.post("addservicetodb", {
+        url: that.gitUrl,
+        project_id: that.idService,
+        remark: that.remarkRancher,
+        stack_id: that.stackIdService
       }).then(function (response) {
         that.dialogAddService = false;
         that.listService(that.idStack);
@@ -2266,6 +2363,39 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2431,6 +2561,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/tiketux/rancherprojects/api/config/detail_template/" + that.template_id).then(function (response) {
         console.log(response.data.data);
         that.configs = response.data.data;
+        that.rancher_compose = response.data.data.rancher_compose_yml;
+        that.docker_compose = response.data.data.docker_compose_yml;
+        that.errortxt = null;
         that.loading = false;
       })["catch"](function (error) {
         console.log(error.response.data);
@@ -2449,6 +2582,7 @@ __webpack_require__.r(__webpack_exports__);
         that.addconfig = false;
         that.name = null;
         that.loading = false;
+        that.errortxt = null;
         that.list();
       })["catch"](function (error) {
         console.log(error.response.data);
@@ -2953,6 +3087,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.list();
@@ -2984,6 +3124,7 @@ __webpack_require__.r(__webpack_exports__);
       this.docker_compose = null;
       this.rancher_compose = null;
       this.template_id = null;
+      this.errortxt = null;
     },
     save: function save() {
       var that = this;
@@ -2995,6 +3136,7 @@ __webpack_require__.r(__webpack_exports__);
         rancher_compose_yml: that.rancher_compose
       }).then(function (response) {
         console.log(response.data.data);
+        that.errortxt = null;
         that.closeAddTemplate();
         that.loading = false;
         that.list();
@@ -39456,6 +39598,241 @@ var render = function() {
         { staticClass: "text-xs-center" },
         [
           _c(
+            "v-btn",
+            {
+              attrs: {
+                disabled: _vm.loading,
+                fixed: "",
+                dark: "",
+                fab: "",
+                bottom: "",
+                right: "",
+                color: "blue"
+              },
+              on: { click: _vm.showAddStack }
+            },
+            [_c("v-icon", [_vm._v("add")])],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-dialog",
+            {
+              attrs: {
+                fullscreen: "",
+                "hide-overlay": "",
+                persistent: "",
+                transition: "dialog-bottom-transition"
+              },
+              model: {
+                value: _vm.addstack,
+                callback: function($$v) {
+                  _vm.addstack = $$v
+                },
+                expression: "addstack"
+              }
+            },
+            [
+              _c(
+                "v-card",
+                [
+                  _c(
+                    "v-toolbar",
+                    { attrs: { dark: "", color: "primary" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { icon: "", disabled: _vm.loading, dark: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.addstack = false
+                            }
+                          }
+                        },
+                        [_c("v-icon", [_vm._v("close")])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("v-toolbar-title", [_vm._v("Stack Config Detail")]),
+                      _vm._v(" "),
+                      _c("v-spacer"),
+                      _vm._v(" "),
+                      _c(
+                        "v-toolbar-items",
+                        [
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: {
+                                disabled: _vm.loading,
+                                dark: "",
+                                flat: ""
+                              },
+                              on: { click: _vm.saveStack }
+                            },
+                            [_vm._v("Save")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.loading
+                    ? _c("v-progress-linear", {
+                        attrs: { indeterminate: true }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "v-card-text",
+                    [
+                      _c(
+                        "v-container",
+                        { attrs: { "grid-list-md": "" } },
+                        [
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs4: "" } },
+                                [
+                                  _c("v-select", {
+                                    attrs: {
+                                      disabled: _vm.loading,
+                                      "item-value": "id",
+                                      "item-text": "name",
+                                      items: _vm.configs,
+                                      label: "Stack Config"
+                                    },
+                                    on: { change: _vm.selectConfigChanged },
+                                    model: {
+                                      value: _vm.config_id,
+                                      callback: function($$v) {
+                                        _vm.config_id = $$v
+                                      },
+                                      expression: "config_id"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs4: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      disabled: _vm.loading,
+                                      label: "Stack Name"
+                                    },
+                                    model: {
+                                      value: _vm.stack_name,
+                                      callback: function($$v) {
+                                        _vm.stack_name = $$v
+                                      },
+                                      expression: "stack_name"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs4: "" } },
+                                [
+                                  _c("v-text-field", {
+                                    attrs: {
+                                      disabled: _vm.loading,
+                                      label: "Stack Description"
+                                    },
+                                    model: {
+                                      value: _vm.stack_description,
+                                      callback: function($$v) {
+                                        _vm.stack_description = $$v
+                                      },
+                                      expression: "stack_description"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-layout",
+                            { attrs: { wrap: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs6: "" } },
+                                [
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      "auto-grow": "",
+                                      outline: "",
+                                      readonly: "",
+                                      label: "Docker Compose Config"
+                                    },
+                                    model: {
+                                      value: _vm.docker_compose,
+                                      callback: function($$v) {
+                                        _vm.docker_compose = $$v
+                                      },
+                                      expression: "docker_compose"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-flex",
+                                { attrs: { xs6: "" } },
+                                [
+                                  _c("v-textarea", {
+                                    attrs: {
+                                      "auto-grow": "",
+                                      outline: "",
+                                      readonly: "",
+                                      label: "Rancher Compose Config"
+                                    },
+                                    model: {
+                                      value: _vm.rancher_compose,
+                                      callback: function($$v) {
+                                        _vm.rancher_compose = $$v
+                                      },
+                                      expression: "rancher_compose"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
             "v-dialog",
             {
               attrs: { width: "500" },
@@ -39477,7 +39854,7 @@ var render = function() {
                       staticClass: "headline grey lighten-2",
                       attrs: { "primary-title": "" }
                     },
-                    [_vm._v("\n          Add Stack To Database\n        ")]
+                    [_vm._v("Add Stack To Database")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -39548,7 +39925,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n            Cancel\n          ")]
+                        [_vm._v("Cancel")]
                       )
                     ],
                     1
@@ -39589,7 +39966,7 @@ var render = function() {
                       staticClass: "headline grey lighten-2",
                       attrs: { "primary-title": "" }
                     },
-                    [_vm._v("\n          Add Service to Database\n        ")]
+                    [_vm._v("Add Service to Database")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -39675,7 +40052,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("\n            Cancel\n          ")]
+                        [_vm._v("Cancel")]
                       )
                     ],
                     1
@@ -39723,7 +40100,8 @@ var render = function() {
                   "rows-per-page-items": _vm.rowsPerPageItems,
                   pagination: _vm.pagination,
                   headers: _vm.headerService,
-                  items: _vm.service
+                  items: _vm.service,
+                  loading: _vm.loading
                 },
                 on: {
                   "update:pagination": function($event) {
@@ -39802,6 +40180,7 @@ var render = function() {
                   "rows-per-page-items": _vm.rowsPerPageItems,
                   pagination: _vm.pagination,
                   headers: _vm.header,
+                  loading: _vm.loading,
                   items: _vm.rancherprojects
                 },
                 on: {
@@ -39998,7 +40377,11 @@ var render = function() {
       _c(
         "v-dialog",
         {
-          attrs: { persistent: "", "max-width": "800px" },
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
           model: {
             value: _vm.detailconfig,
             callback: function($$v) {
@@ -40011,11 +40394,28 @@ var render = function() {
           _c(
             "v-card",
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "headline" }, [
-                  _vm._v("Stack Config")
-                ])
-              ]),
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.detailconfig = false
+                        }
+                      }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("Stack Config Detail")])
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-card-text",
@@ -40030,10 +40430,10 @@ var render = function() {
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs4: "" } },
                             [
                               _c("v-text-field", {
-                                attrs: { label: "Template Name" },
+                                attrs: { readonly: "", label: "Template Name" },
                                 model: {
                                   value: _vm.name,
                                   callback: function($$v) {
@@ -40044,14 +40444,26 @@ var render = function() {
                               })
                             ],
                             1
-                          ),
-                          _vm._v(" "),
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs6: "" } },
                             [
                               _c("v-textarea", {
-                                attrs: { label: "Docker Compose Config" },
+                                attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
+                                  readonly: "",
+                                  label: "Docker Compose Config"
+                                },
                                 model: {
                                   value: _vm.docker_compose,
                                   callback: function($$v) {
@@ -40066,10 +40478,15 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs6: "" } },
                             [
                               _c("v-textarea", {
-                                attrs: { label: "Rancher Compose Config" },
+                                attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
+                                  readonly: "",
+                                  label: "Rancher Compose Config"
+                                },
                                 model: {
                                   value: _vm.rancher_compose,
                                   callback: function($$v) {
@@ -40089,27 +40506,6 @@ var render = function() {
                   )
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "error", flat: "" },
-                      on: {
-                        click: function($event) {
-                          _vm.detailconfig = false
-                        }
-                      }
-                    },
-                    [_vm._v("Close")]
-                  )
-                ],
-                1
               )
             ],
             1
@@ -40121,7 +40517,11 @@ var render = function() {
       _c(
         "v-dialog",
         {
-          attrs: { persistent: "", "max-width": "500px" },
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
           model: {
             value: _vm.addconfig,
             callback: function($$v) {
@@ -40134,11 +40534,45 @@ var render = function() {
           _c(
             "v-card",
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "headline" }, [
-                  _vm._v("Stack Config")
-                ])
-              ]),
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.addconfig = false
+                        }
+                      }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("Stack Config")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-card-text",
@@ -40153,7 +40587,7 @@ var render = function() {
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs3: "" } },
                             [
                               _c("v-select", {
                                 attrs: {
@@ -40177,7 +40611,7 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs3: "" } },
                             [
                               _c("v-text-field", {
                                 attrs: {
@@ -40197,107 +40631,178 @@ var render = function() {
                               })
                             ],
                             1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "" } },
+                                [
+                                  _vm.configs.docker.length
+                                    ? _c("v-subheader", [
+                                        _vm._v("Docker Config")
+                                      ])
+                                    : _vm._e()
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.configs.docker, function(
+                                items,
+                                index
+                              ) {
+                                return _c(
+                                  "v-flex",
+                                  { key: items.key, attrs: { xs12: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        "error-messages":
+                                          _vm.errortxt != null
+                                            ? _vm.errortxt[
+                                                "configs.docker." +
+                                                  index +
+                                                  ".value"
+                                              ]
+                                            : "",
+                                        label: items.key
+                                      },
+                                      model: {
+                                        value: items.value,
+                                        callback: function($$v) {
+                                          _vm.$set(items, "value", $$v)
+                                        },
+                                        expression: "items.value"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              })
+                            ],
+                            2
                           ),
                           _vm._v(" "),
-                          _vm.configs.docker.length
-                            ? _c("v-subheader", [_vm._v("Docker Config")])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm._l(_vm.configs.docker, function(items) {
-                            return _c(
-                              "v-flex",
-                              { key: items.key, attrs: { xs12: "" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    "error-messages":
-                                      _vm.errortxt != null
-                                        ? _vm.errortxt[
-                                            "configs.docker." +
-                                              _vm.index +
-                                              ".value"
-                                          ]
-                                        : "",
-                                    label: items.key
-                                  },
-                                  model: {
-                                    value: items.value,
-                                    callback: function($$v) {
-                                      _vm.$set(items, "value", $$v)
-                                    },
-                                    expression: "items.value"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          }),
-                          _vm._v(" "),
-                          _vm.configs.rancher.length
-                            ? _c("v-subheader", [_vm._v("Rancher Config")])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm._l(_vm.configs.rancher, function(items) {
-                            return _c(
-                              "v-flex",
-                              { key: items.key, attrs: { xs12: "" } },
-                              [
-                                _c("v-text-field", {
-                                  attrs: {
-                                    "error-messages":
-                                      _vm.errortxt != null
-                                        ? _vm.errortxt.configs.rancher.index
-                                            .value
-                                        : "",
-                                    label: items.key
-                                  },
-                                  model: {
-                                    value: items.value,
-                                    callback: function($$v) {
-                                      _vm.$set(items, "value", $$v)
-                                    },
-                                    expression: "items.value"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          })
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "" } },
+                            [
+                              _c(
+                                "v-flex",
+                                { attrs: { xs12: "" } },
+                                [
+                                  _vm.configs.rancher.length
+                                    ? _c("v-subheader", [
+                                        _vm._v("Rancher Config")
+                                      ])
+                                    : _vm._e()
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.configs.rancher, function(
+                                items,
+                                index
+                              ) {
+                                return _c(
+                                  "v-flex",
+                                  { key: items.key, attrs: { xs12: "" } },
+                                  [
+                                    _c("v-text-field", {
+                                      attrs: {
+                                        "error-messages":
+                                          _vm.errortxt != null
+                                            ? _vm.errortxt[
+                                                "configs.rancher." +
+                                                  index +
+                                                  ".value"
+                                              ]
+                                            : "",
+                                        label: items.key
+                                      },
+                                      model: {
+                                        value: items.value,
+                                        callback: function($$v) {
+                                          _vm.$set(items, "value", $$v)
+                                        },
+                                        expression: "items.value"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              })
+                            ],
+                            2
+                          )
                         ],
-                        2
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
+                                  readonly: "",
+                                  label: "Docker Compose Template"
+                                },
+                                model: {
+                                  value: _vm.docker_compose,
+                                  callback: function($$v) {
+                                    _vm.docker_compose = $$v
+                                  },
+                                  expression: "docker_compose"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs6: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
+                                  readonly: "",
+                                  label: "Rancher Compose Template"
+                                },
+                                model: {
+                                  value: _vm.rancher_compose,
+                                  callback: function($$v) {
+                                    _vm.rancher_compose = $$v
+                                  },
+                                  expression: "rancher_compose"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "error", flat: "" },
-                      on: {
-                        click: function($event) {
-                          _vm.addconfig = false
-                        }
-                      }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "blue darken-1", flat: "" },
-                      on: { click: _vm.save }
-                    },
-                    [_vm._v("Save")]
                   )
                 ],
                 1
@@ -41161,7 +41666,11 @@ var render = function() {
       _c(
         "v-dialog",
         {
-          attrs: { persistent: "", "max-width": "800px" },
+          attrs: {
+            fullscreen: "",
+            "hide-overlay": "",
+            transition: "dialog-bottom-transition"
+          },
           model: {
             value: _vm.addedit,
             callback: function($$v) {
@@ -41174,11 +41683,41 @@ var render = function() {
           _c(
             "v-card",
             [
-              _c("v-card-title", [
-                _c("span", { staticClass: "headline" }, [
-                  _vm._v("Stack Template")
-                ])
-              ]),
+              _c(
+                "v-toolbar",
+                { attrs: { dark: "", color: "primary" } },
+                [
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { icon: "", dark: "" },
+                      on: { click: _vm.closeAddTemplate }
+                    },
+                    [_c("v-icon", [_vm._v("close")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("v-toolbar-title", [_vm._v("Stack Template")]),
+                  _vm._v(" "),
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-toolbar-items",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { dark: "", flat: "" },
+                          on: { click: _vm.save }
+                        },
+                        [_vm._v("Save")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "v-card-text",
@@ -41193,7 +41732,7 @@ var render = function() {
                         [
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs4: "" } },
                             [
                               _c("v-text-field", {
                                 attrs: {
@@ -41213,14 +41752,23 @@ var render = function() {
                               })
                             ],
                             1
-                          ),
-                          _vm._v(" "),
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-layout",
+                        { attrs: { wrap: "" } },
+                        [
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs6: "" } },
                             [
                               _c("v-textarea", {
                                 attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
                                   "error-messages":
                                     _vm.errortxt != null
                                       ? _vm.errortxt.docker_compose_yml
@@ -41241,10 +41789,12 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-flex",
-                            { attrs: { xs12: "" } },
+                            { attrs: { xs6: "" } },
                             [
                               _c("v-textarea", {
                                 attrs: {
+                                  "auto-grow": "",
+                                  outline: "",
                                   "error-messages":
                                     _vm.errortxt != null
                                       ? _vm.errortxt.rancher_compose_yml
@@ -41267,32 +41817,6 @@ var render = function() {
                       )
                     ],
                     1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-card-actions",
-                [
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "error", flat: "" },
-                      on: { click: _vm.closeAddTemplate }
-                    },
-                    [_vm._v("Cancel")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
-                    {
-                      attrs: { color: "blue darken-1", flat: "" },
-                      on: { click: _vm.save }
-                    },
-                    [_vm._v("Save")]
                   )
                 ],
                 1
