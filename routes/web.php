@@ -18,8 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/usermanagement', 'HomeController@index')->name('home');
-Route::get('/rancherprojects', 'HomeController@index')->name('home');
-Route::get('/stack', 'HomeController@index')->name('home');
-Route::get('/stack_template', 'HomeController@index')->name('home');
-Route::get('/stack_config', 'HomeController@index')->name('home');
+// Route::get('/usermanagement', 'HomeController@index')->name('home');
+// Route::get('/rancherprojects', 'HomeController@index')->name('home');
+// Route::get('/stack', 'HomeController@index')->name('home');
+// Route::get('/stack_template', 'HomeController@index')->name('home');
+// Route::get('/stack_config', 'HomeController@index')->name('home');

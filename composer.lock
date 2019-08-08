@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5bae086ee5bf85af4a89d7d9a69b3822",
+    "content-hash": "483908c10af2366934398e2be96f898b",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -3725,6 +3725,43 @@
             "time": "2017-11-27T11:13:29+00:00"
         },
         {
+            "name": "tiketux/open-menu",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/euclidian/menu.git",
+                "reference": "637877fe3021ea6c698e2bb46f1881f59a249377"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/euclidian/menu/zipball/637877fe3021ea6c698e2bb46f1881f59a249377",
+                "reference": "637877fe3021ea6c698e2bb46f1881f59a249377",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tiketux\\Menu\\MenuServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tiketux\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Muhammad Anis",
+                    "email": "m.anis@3trust.com"
+                }
+            ],
+            "description": "API Menu",
+            "time": "2019-08-07T08:05:55+00:00"
+        },
+        {
             "name": "tiketux/rancher-projects",
             "version": "0.1.10",
             "source": {
@@ -3793,16 +3830,13 @@
                     "Tiketux\\UserManagement\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Muhammad Anis",
                     "email": "m.anis@3trust.com"
                 }
             ],
-            "support": {
-                "source": "https://github.com/euclidian/user-management/tree/develop",
-                "issues": "https://github.com/euclidian/user-management/issues"
-            },
             "time": "2019-07-16T03:40:09+00:00"
         },
         {

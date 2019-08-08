@@ -1,5 +1,11 @@
 <template>
-  <v-navigation-drawer class="app--drawer" :mini-variant.sync="mini" app v-model="showDrawer" :width="drawWidth">
+  <v-navigation-drawer
+    class="app--drawer"
+    :mini-variant.sync="mini"
+    app
+    v-model="showDrawer"
+    :width="drawWidth"
+  >
     <v-toolbar color="primary darken-1" dark>
       <v-toolbar-title class="ml-0 pl-3">
         <span class="hidden-sm-and-down">Rancher RBAC</span>
@@ -11,19 +17,24 @@
           <!--group with subitems-->
           <v-list-group
             v-if="item.items"
-            :key="item.title"
+            :key="item.name"
             :group="item.group"
             :prepend-icon="item.icon"
             no-action="no-action"
           >
             <v-list-tile slot="activator" ripple="ripple">
               <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                <v-list-tile-title>{{ item.name }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
             <template v-for="subItem in item.items">
               <!--sub group-->
-              <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
+              <v-list-group
+                v-if="subItem.items"
+                :key="subItem.name"
+                :group="subItem.group"
+                sub-group="sub-group"
+              >
                 <v-list-tile slot="activator" ripple="ripple">
                   <v-list-tile-content>
                     <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
@@ -62,44 +73,44 @@
               </v-list-tile>
             </template>
           </v-list-group>
-          <v-subheader v-else-if="item.header" :key="item.name">{{ item.header }}</v-subheader>
-          <v-divider v-else-if="item.divider" :key="item.name"></v-divider>
+          <v-subheader v-else-if="item.header" :key="item.url">{{ item.header }}</v-subheader>
+          <v-divider v-else-if="item.divider" :key="item.url"></v-divider>
           <!--top-level link-->
           <v-list-tile
-            v-else-if="item.name=='users'&&user.is_admin==1"
-            :to="!item.href ? { name: item.name } : null"
+            v-else-if="item.url=='users'&&user.is_admin==1"
+            :to="!item.href ? { name: item.url } : null"
             :href="item.href"
             ripple="ripple"
             :disabled="item.disabled"
             :target="item.target"
             rel="noopener"
-            :key="item.name"
+            :key="item.url"
           >
             <v-list-tile-action v-if="item.icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-tile-title>{{ item.name }}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action v-if="item.subAction">
               <v-icon class="success--text">{{ item.subAction }}</v-icon>
             </v-list-tile-action>
           </v-list-tile>
           <v-list-tile
-            v-else-if="item.name!='users'"
-            :to="!item.href ? { name: item.name } : null"
+            v-else-if="item.url!='users'"
+            :to="!item.href ? { name: item.url } : null"
             :href="item.href"
             ripple="ripple"
             :disabled="item.disabled"
             :target="item.target"
             rel="noopener"
-            :key="item.name"
+            :key="item.url"
           >
             <v-list-tile-action v-if="item.icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+              <v-list-tile-title>{{ item.name }}</v-list-tile-title>
             </v-list-tile-content>
             <v-list-tile-action v-if="item.subAction">
               <v-icon class="success--text">{{ item.subAction }}</v-icon>
@@ -111,8 +122,8 @@
   </v-navigation-drawer>
 </template>
 <script>
-import menu from "../api/menu"
-import VuePerfectScrollbar from "vue-perfect-scrollbar"
+import menu from "../api/menu";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
 export default {
   name: "AppDrawer",
   components: {
@@ -130,47 +141,62 @@ export default {
     showDrawer: Boolean,
     user: Object
   },
+  mounted() {
+    var that = this;
+    axios
+      .get("/menu/api/list")
+      .then(response => {
+        console.log(response.data);
+        that.menus= response.data.data;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  },
   data() {
     return {
       mini: false,
-      menus: menu,
+      menus: [],
       scrollSettings: {
         maxScrollbarLength: 160
       }
-    }
+    };
   },
   computed: {
     computeGroupActive() {
-      return true
+      return true;
     },
     computeLogo() {
-      return "/static/m.png"
+      return "/static/m.png";
     },
 
     sideToolbarColor() {
-      return this.$vuetify.options.extra.sideNav
+      return this.$vuetify.options.extra.sideNav;
     }
   },
   created() {},
 
   methods: {
     genChildTarget(item, subItem) {
-      if (subItem.href) return
+      if (subItem.href) return;
       if (subItem.component) {
         return {
           name: subItem.component
-        }
+        };
       }
-      return { name: `${item.group}/${subItem.name}` }
+      return { name: `${item.group}/${subItem.name}` };
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
-.app--drawer
-  overflow: hidden
-  .drawer-menu--scroll
-    height: calc(100vh - 48px)
-    overflow: auto
+.app--drawer {
+  overflow: hidden;
+
+  .drawer-menu--scroll {
+    height: calc(100vh - 48px);
+    overflow: auto;
+  }
+}
 </style>

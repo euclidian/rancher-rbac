@@ -1,16 +1,7 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:euclidian/user-management.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:euclidian/rancher-projects.git"
-        }
-    ],
+    "repositories": [],
     "description": "The Laravel Framework.",
     "keywords": [
         "framework",
@@ -23,6 +14,7 @@
         "laravel/framework": "5.8.*",
         "laravel/passport": "^7.3",
         "laravel/tinker": "^1.0",
+        "tiketux/open-menu": "^0.1.0",
         "tiketux/rancher-projects": "^0.1.10",
         "tiketux/usermanagement": "^0.1.2"
     },

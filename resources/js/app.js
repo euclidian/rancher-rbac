@@ -13,7 +13,7 @@ import RancherProjectsComponent from "./components/RancherProjectsComponent.vue"
 import StackRancherComponent from "./components/StackRancherComponent.vue";
 import StackTemplateComponent from "./components/StackTemplateComponent.vue";
 import StackConfigComponent from "./components/StackConfigComponent.vue";
-import colors from "vuetify/es5/util/colors";
+import HalamanListComponent from "./components/menu/HalamanListComponent.vue";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -72,6 +72,16 @@ const router = new VueRouter({
             path: '/stack_config',
             name: 'stack_config',
             component: StackConfigComponent
+        },
+        {
+            path: '/stack_config',
+            name: 'stack_config',
+            component: StackConfigComponent
+        },
+        {
+            path: '/menu',
+            name: 'menu',
+            component: HalamanListComponent
         }
     ],
 });
@@ -80,9 +90,3 @@ const app = new Vue({
     el: '#app',
     router,
 });
-Vue.prototype.$vuetify.theme = {
-    primary: colors.lightBlue.darken2,
-    secondary: colors.grey.darken1,
-    accent: colors.shades.black,
-    error: colors.red.accent3
-  };
