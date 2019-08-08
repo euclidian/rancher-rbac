@@ -2027,6 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RancherProjectsComponent",
   mounted: function mounted() {
@@ -2086,7 +2087,8 @@ __webpack_require__.r(__webpack_exports__);
       stack_name: null,
       stack_description: null,
       docker_compose: null,
-      rancher_compose: null
+      rancher_compose: null,
+      errortxt: null
     };
   },
   methods: {
@@ -2100,8 +2102,10 @@ __webpack_require__.r(__webpack_exports__);
         that.config_id = response.data.data[0].id;
         that.selectConfigChanged();
         that.loading = false;
+        that.errortxt = null;
       })["catch"](function (error) {
         console.log(error);
+        that.loading = false;
       });
     },
     selectConfigChanged: function selectConfigChanged() {
@@ -2115,7 +2119,8 @@ __webpack_require__.r(__webpack_exports__);
         that.loading = false;
       })["catch"](function (error) {
         console.log(error.response.data);
-        that.errortxt = error.response.data.errors;
+        that.errortxt = error.response.data;
+        that.loading = false;
       });
     },
     saveStack: function saveStack() {
@@ -2134,10 +2139,13 @@ __webpack_require__.r(__webpack_exports__);
         that.config_id = null;
         that.addstack = false;
         that.loading = false;
+        that.errortxt = null;
 
         _this.list();
       })["catch"](function (error) {
-        console.log(error);
+        console.log(error.response.data);
+        that.errortxt = error.response.data;
+        that.loading = false;
       });
     },
     list: function list() {
@@ -39983,7 +39991,7 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c("v-toolbar-title", [_vm._v("Stack Config Detail")]),
+                      _c("v-toolbar-title", [_vm._v("Create Stack")]),
                       _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
@@ -40058,6 +40066,10 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: {
                                       disabled: _vm.loading,
+                                      "error-messages":
+                                        _vm.errortxt != null
+                                          ? _vm.errortxt.errors.name
+                                          : "",
                                       label: "Stack Name"
                                     },
                                     model: {
@@ -40079,6 +40091,10 @@ var render = function() {
                                   _c("v-text-field", {
                                     attrs: {
                                       disabled: _vm.loading,
+                                      "error-messages":
+                                        _vm.errortxt != null
+                                          ? _vm.errortxt.errors.description
+                                          : "",
                                       label: "Stack Description"
                                     },
                                     model: {
