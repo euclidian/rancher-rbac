@@ -38,12 +38,17 @@
                   ></v-select>
                 </v-flex>
                 <v-flex xs4>
-                  <v-text-field :disabled="loading" v-model="stack_name" :error-messages="errortxt!=null?errortxt.errors.name:''" label="Stack Name"></v-text-field>
+                  <v-text-field
+                    :disabled="loading"
+                    v-model="stack_name"
+                    :error-messages="errortxt!=null?errortxt.errors.name:''"
+                    label="Stack Name"
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs4>
                   <v-text-field
                     :disabled="loading"
-                     :error-messages="errortxt!=null?errortxt.errors.description:''"
+                    :error-messages="errortxt!=null?errortxt.errors.description:''"
                     v-model="stack_description"
                     label="Stack Description"
                   ></v-text-field>
@@ -154,7 +159,7 @@
               class="ma-2 white--text"
               fab
               small
-              @click="addService(props.item.id, props.item.stackId)"
+              @click="addService(props.item.id, props.item.stackId,props.item.name)"
             >
               <v-icon dark>cloud_upload</v-icon>
             </v-btn>
@@ -267,7 +272,8 @@ export default {
       stack_description: null,
       docker_compose: null,
       rancher_compose: null,
-      errortxt:null
+      serviceName: null,
+      errortxt: null
     };
   },
   methods: {
@@ -436,11 +442,12 @@ export default {
           console.log(response.data);
         });
     },
-    addService: function(id, stack_id) {
+    addService: function(id, stack_id, name) {
       var that = this;
       that.dialogAddService = true;
       that.idService = id;
       that.stackIdService = that.idStackDB;
+      that.serviceName = name;
     },
     saveService: function(id, stack_id) {
       var that = this;
@@ -449,7 +456,8 @@ export default {
           url: that.gitUrl,
           project_id: that.idService,
           remark: that.remarkRancher,
-          stack_id: that.stackIdService
+          stack_id: that.stackIdService,
+          name: that.serviceName
         })
         .then(response => {
           that.dialogAddService = false;

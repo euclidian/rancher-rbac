@@ -14,6 +14,7 @@ import StackRancherComponent from "./components/StackRancherComponent.vue";
 import StackTemplateComponent from "./components/StackTemplateComponent.vue";
 import StackConfigComponent from "./components/StackConfigComponent.vue";
 import HalamanListComponent from "./components/menu/HalamanListComponent.vue";
+import ServiceAssignmentComponent from "./components/ServiceAssignmentComponent.vue";
 import NotFoundComponent from "./components/NotFoundComponent.vue";
 
 window.Vue = require('vue');
@@ -75,14 +76,14 @@ const router = new VueRouter({
             component: StackConfigComponent
         },
         {
-            path: '/stack_config',
-            name: 'stack_config',
-            component: StackConfigComponent
-        },
-        {
             path: '/menu',
             name: 'menu',
             component: HalamanListComponent
+        },
+        {
+            path: '/service_assignment',
+            name: 'service_assignment',
+            component: ServiceAssignmentComponent
         },
         {
             path: '/*',

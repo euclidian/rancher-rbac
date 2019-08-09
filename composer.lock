@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b5f555f6d930592a2c7a98f5c35788c7",
+    "content-hash": "9495b9da8cfe1d9eae2d127e28f4a5ea",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -3763,16 +3763,16 @@
         },
         {
             "name": "tiketux/rancher-projects",
-            "version": "0.1.11",
+            "version": "0.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/rancher-projects.git",
-                "reference": "738d423401628207b5035c412498946e8a8432f3"
+                "reference": "68f955d4128811e42f941f546b97eb2265a6bbea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/738d423401628207b5035c412498946e8a8432f3",
-                "reference": "738d423401628207b5035c412498946e8a8432f3",
+                "url": "https://api.github.com/repos/euclidian/rancher-projects/zipball/68f955d4128811e42f941f546b97eb2265a6bbea",
+                "reference": "68f955d4128811e42f941f546b97eb2265a6bbea",
                 "shasum": ""
             },
             "require": {
@@ -3798,7 +3798,7 @@
                     "email": "m.anis@3trust.com"
                 }
             ],
-            "time": "2019-08-07T08:44:44+00:00"
+            "time": "2019-08-09T07:57:45+00:00"
         },
         {
             "name": "tiketux/usermanagement",
