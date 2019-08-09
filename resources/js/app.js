@@ -14,6 +14,7 @@ import StackRancherComponent from "./components/StackRancherComponent.vue";
 import StackTemplateComponent from "./components/StackTemplateComponent.vue";
 import StackConfigComponent from "./components/StackConfigComponent.vue";
 import HalamanListComponent from "./components/menu/HalamanListComponent.vue";
+import NotFoundComponent from "./components/NotFoundComponent.vue";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -30,13 +31,13 @@ window.axios.defaults.headers.common = {
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ * Eg. ./components/NotFoundComponent.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('example-component', require('./components/NotFoundComponent.vue').default);
 Vue.component('home-component', require('./src/App.vue').default);
 
 /**
@@ -82,6 +83,11 @@ const router = new VueRouter({
             path: '/menu',
             name: 'menu',
             component: HalamanListComponent
+        },
+        {
+            path: '/*',
+            name: 'not_found',
+            component: NotFoundComponent
         }
     ],
 });
