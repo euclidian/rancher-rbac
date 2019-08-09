@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c027bb50eee90a1cd2bc7f4425a257f",
+    "content-hash": "b5f555f6d930592a2c7a98f5c35788c7",
     "packages": [
         {
             "name": "benmag/laravel-rancher",
@@ -3726,16 +3726,16 @@
         },
         {
             "name": "tiketux/open-menu",
-            "version": "0.1",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/euclidian/menu.git",
-                "reference": "637877fe3021ea6c698e2bb46f1881f59a249377"
+                "reference": "f4caab98603a20ec7438202369465403c2878c9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/euclidian/menu/zipball/637877fe3021ea6c698e2bb46f1881f59a249377",
-                "reference": "637877fe3021ea6c698e2bb46f1881f59a249377",
+                "url": "https://api.github.com/repos/euclidian/menu/zipball/f4caab98603a20ec7438202369465403c2878c9c",
+                "reference": "f4caab98603a20ec7438202369465403c2878c9c",
                 "shasum": ""
             },
             "type": "library",
@@ -3759,7 +3759,7 @@
                 }
             ],
             "description": "API Menu",
-            "time": "2019-08-07T08:05:55+00:00"
+            "time": "2019-08-09T03:50:59+00:00"
         },
         {
             "name": "tiketux/rancher-projects",

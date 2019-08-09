@@ -14,6 +14,7 @@ import StackRancherComponent from "./components/StackRancherComponent.vue";
 import StackTemplateComponent from "./components/StackTemplateComponent.vue";
 import StackConfigComponent from "./components/StackConfigComponent.vue";
 import HalamanListComponent from "./components/menu/HalamanListComponent.vue";
+import ExampleComponent from "./components/ExampleComponent.vue";
 
 window.Vue = require('vue');
 window.Vuetify = require('vuetify');
@@ -82,6 +83,11 @@ const router = new VueRouter({
             path: '/menu',
             name: 'menu',
             component: HalamanListComponent
+        },
+        {
+            path: '/*',
+            name: 'not_found',
+            component: ExampleComponent
         }
     ],
 });

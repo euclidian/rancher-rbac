@@ -1787,9 +1787,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   }
 });
 
@@ -39880,32 +39883,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Nothing to do here")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c(
+                "center",
+                [
+                  _c("v-icon", [_vm._v("fas fa-exclamation-triangle")]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Page Not Found")])
+                ],
+                1
               )
-            ])
-          ])
+            ],
+            1
+          )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -84034,6 +84041,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_StackTemplateComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/StackTemplateComponent.vue */ "./resources/js/components/StackTemplateComponent.vue");
 /* harmony import */ var _components_StackConfigComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/StackConfigComponent.vue */ "./resources/js/components/StackConfigComponent.vue");
 /* harmony import */ var _components_menu_HalamanListComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/menu/HalamanListComponent.vue */ "./resources/js/components/menu/HalamanListComponent.vue");
+/* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -84042,6 +84050,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
  // Ensure you are using css-loader
+
 
 
 
@@ -84106,6 +84115,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/menu',
     name: 'menu',
     component: _components_menu_HalamanListComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }, {
+    path: '/*',
+    name: 'not_found',
+    component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   }]
 });
 var app = new Vue({
