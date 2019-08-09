@@ -2881,6 +2881,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2924,6 +2931,9 @@ __webpack_require__.r(__webpack_exports__);
         text: "Gitlab URL",
         value: "gitlab_url"
       }, {
+        text: "Name",
+        value: "name"
+      }, {
         text: "Remark",
         value: "remark"
       }, {
@@ -2936,7 +2946,8 @@ __webpack_require__.r(__webpack_exports__);
       dialogService: false,
       dialogFormService: false,
       idProject: 0,
-      showEnvironment: false
+      showEnvironment: false,
+      nameService: null
     };
   },
   methods: {
@@ -3031,6 +3042,7 @@ __webpack_require__.r(__webpack_exports__);
         that.dialogFormService = true;
         that.idService = response.data.data.id;
         that.gitURL = response.data.data.gitlab_url;
+        that.nameService = response.data.data.name;
         that.rancherProjectId = response.data.data.rancher_project_id;
         that.remarkService = response.data.data.remark;
         that.stackIdService = response.data.data.stack_id;
@@ -3056,6 +3068,7 @@ __webpack_require__.r(__webpack_exports__);
       that.instance.post("updateservicetodb", {
         id: that.idService,
         url: that.gitURL,
+        name: that.nameService,
         project_id: that.rancherProjectId,
         remark: that.remarkService,
         stack_id: that.stackIdService
@@ -41634,7 +41647,7 @@ var render = function() {
                               _c("v-text-field", {
                                 attrs: {
                                   counter: 10,
-                                  label: "Name",
+                                  label: "Git Url",
                                   required: ""
                                 },
                                 model: {
@@ -41643,6 +41656,17 @@ var render = function() {
                                     _vm.gitURL = $$v
                                   },
                                   expression: "gitURL"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("v-text-field", {
+                                attrs: { label: "Service Name", required: "" },
+                                model: {
+                                  value: _vm.nameService,
+                                  callback: function($$v) {
+                                    _vm.nameService = $$v
+                                  },
+                                  expression: "nameService"
                                 }
                               }),
                               _vm._v(" "),
@@ -41756,6 +41780,8 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(props.item.gitlab_url))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(props.item.name))]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(props.item.remark))]),
                           _vm._v(" "),
@@ -41936,7 +41962,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  3148785251
+                  378450005
                 )
               })
             ],
