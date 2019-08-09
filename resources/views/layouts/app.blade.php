@@ -13,6 +13,7 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
+    <link href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
 
     <!-- Styles -->

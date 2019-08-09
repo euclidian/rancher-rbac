@@ -1,5 +1,4 @@
 const Menu = [
-    { header: "Apps" },
     {
         title: "User Management",
         group: "apps",

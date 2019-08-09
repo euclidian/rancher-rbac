@@ -7,8 +7,6 @@
         </div>
       </v-card-title>
       <v-data-table
-        :rows-per-page-items="rowsPerPageItems"
-        :pagination.sync="pagination"
         :headers="header"
         :items="usermanagement"
         class="elevation-1"
