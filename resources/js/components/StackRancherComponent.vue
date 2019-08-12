@@ -1,6 +1,11 @@
 <template>
   <v-app>
-    <rancher-environment v-if="showEnvironment" v-on:closeEnvironments="closeEnvironments" :showEnvironment="showEnvironment" :idProject="idProject"></rancher-environment>
+    <rancher-environment
+      v-if="showEnvironment"
+      v-on:closeEnvironments="closeEnvironments"
+      :showEnvironment="showEnvironment"
+      :idProject="idProject"
+    ></rancher-environment>
     <v-card v-if="dialogFormService">
       <v-btn color="white" class="mb-0 black--text" fab small @click="dialogFormService=false">
         <v-icon dark>close</v-icon>
@@ -13,7 +18,8 @@
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field v-model="rancherProjectId" :counter="10" label="Name" required readonly></v-text-field>
-              <v-text-field v-model="gitURL" :counter="10" label="Name" required></v-text-field>
+              <v-text-field v-model="gitURL" :counter="10" label="Git Url" required></v-text-field>
+              <v-text-field v-model="nameService" label="Service Name" required></v-text-field>
               <v-textarea v-model="remarkService" name="input-7-1" label="Remark" hint="Hint text"></v-textarea>
             </v-flex>
           </v-layout>
@@ -42,6 +48,7 @@
         <template v-slot:items="props">
           <td>{{ props.item.rancher_project_id }}</td>
           <td>{{ props.item.gitlab_url }}</td>
+          <td>{{ props.item.name }}</td>
           <td>{{ props.item.remark }}</td>
           <td>{{ props.item.created_at }}</td>
           <td>
@@ -209,6 +216,7 @@ export default {
       headerDetail: [
         { text: "ID Rancher ", value: "rancher_project_id" },
         { text: "Gitlab URL", value: "gitlab_url" },
+        { text: "Name", value: "name" },
         { text: "Remark", value: "remark" },
         { text: "Tanggal", value: "created_at" },
         { text: "Action", value: "rancher_project_id" }
@@ -216,7 +224,8 @@ export default {
       dialogService: false,
       dialogFormService: false,
       idProject: 0,
-      showEnvironment: false
+      showEnvironment: false,
+      nameService: null
     };
   },
 
@@ -332,6 +341,7 @@ export default {
           that.dialogFormService = true;
           that.idService = response.data.data.id;
           that.gitURL = response.data.data.gitlab_url;
+          that.nameService = response.data.data.name;
           that.rancherProjectId = response.data.data.rancher_project_id;
           that.remarkService = response.data.data.remark;
           that.stackIdService = response.data.data.stack_id;
@@ -362,6 +372,7 @@ export default {
         .post("updateservicetodb", {
           id: that.idService,
           url: that.gitURL,
+          name: that.nameService,
           project_id: that.rancherProjectId,
           remark: that.remarkService,
           stack_id: that.stackIdService
