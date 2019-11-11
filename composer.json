@@ -16,7 +16,7 @@
         "laravel/tinker": "^1.0",
         "ratchet/pawl": "^0.3.4",
         "tiketux/open-menu": "^0.1.1",
-        "tiketux/rancher-projects": "^0.1.15",
+        "tiketux/rancher-projects": "^0.1.16",
         "tiketux/usermanagement": "^0.1.3"
     },
     "require-dev": {
